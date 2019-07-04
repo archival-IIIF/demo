@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "file-icon-vectors": "^1.0.0",
+    "filesize": "^4.1.2",
+    "image-size": "^0.7.4",
+    "koa": "^2.5.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-route": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "koa-static-server": "^1.3.4",
+    "mime-types": "^2.1.20",
+    "sharp": "^0.22.1"
+  },
+  "devDependencies": {
+    "@types/image-size": "^0.7.0",
+    "@types/koa": "^2.0.48",
+    "@types/koa-router": "^7.0.40",
+    "@types/mime-types": "^2.1.0",
+    "@types/node": "^12.0.0",
+    "@types/sharp": "^0.22.2",
+    "typescript": "^3.4.1",
+    "typescript-tslint-plugin": "^0.3.1"
+  },
+  "scripts": {
+    "watch-server": "nodemon --watch \"src/**/*\" -e ts,tsx --exec ts-node ./src/server.ts",
+    "build-server": "tsc"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "license": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "attribution": "<a href=\"https://en.wikipedia.org\">Provided by Wikipedia</a>",
+  "logo": "https://en.wikipedia.org/static/images/project-logos/enwiki.png",
+  "rendering": [
+    {
+      "@id": "http://localhost:3333/file/manifestation/access",
+      "label": "Protocol 2002-04-11.pdf (Access copy)",
+      "format": "application/pdf"
+    },
+    {
+      "@id": "http://localhost:3333/file/manifestation/original",
+      "label": "Protocol 2002-04-11.pdf (Preservation copy)",
+      "format": "application/pdf"
+    },
+    {
+      "@id": "http://localhost:3333/file/manifestation/original",
+      "label": "Protocol 2002-04-11.docx (Original master)",
+      "format": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    }
+  ]
+}

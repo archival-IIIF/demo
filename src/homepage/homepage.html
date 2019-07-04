@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>archival IIIF demo</title>
+    <link rel="icon" type="image/png" href="/public/iiif.png">
+    <link rel="stylesheet" href="static/css/archivalIIIFViewer.min.css">
+</head>
+<body>
+
+
+    <noscript>
+        You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            new ArchivalIIIFViewer({id: 'root', language: 'en'});
+        });
+    </script>
+
+    <script type="text/javascript" src="static/js/archivalIIIFViewer.min.js"></script>
+
+
+</body>
+</html>

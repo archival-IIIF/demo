@@ -2,6 +2,8 @@ import * as Router from 'koa-router';
 import Pronoms from './pronoms';
 import * as fs from 'fs';
 import * as path from 'path';
+import getBaseUrl from '../lib/BaseUrl';
+
 const filesize = require('filesize');
 
 class Common {
@@ -16,7 +18,7 @@ class Common {
                 type: 'dctypes:Sound',
                 format: 'audio/mpeg',
                 thumbnail: {
-                    '@id': ctx.request.origin + '/file-icon/mp3.svg',
+                    '@id': getBaseUrl(ctx) + '/file-icon/mp3.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -27,7 +29,7 @@ class Common {
                 type: 'dctypes:Sound',
                 format: 'audio/mpeg',
                 thumbnail: {
-                    '@id': ctx.request.origin + '/file-icon/ogg.svg',
+                    '@id': getBaseUrl(ctx)  + '/file-icon/ogg.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -62,7 +64,7 @@ class Common {
                 type: 'dctypes:Document',
                 format: 'video/mp4',
                 thumbnail: {
-                    '@id': ctx.request.origin + '/file-icon/mp4.svg',
+                    '@id': getBaseUrl(ctx) + '/file-icon/mp4.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -73,7 +75,7 @@ class Common {
                 type: 'dctypes:Document',
                 format: 'video/ogg',
                 thumbnail: {
-                    '@id': ctx.request.origin + '/file-icon/ogv.svg',
+                    '@id': getBaseUrl(ctx) + '/file-icon/ogv.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -84,7 +86,7 @@ class Common {
                 type: 'dctypes:Document',
                 format: 'video/webm',
                 thumbnail: {
-                    '@id': ctx.request.origin + '/file-icon/webm.svg',
+                    '@id': getBaseUrl(ctx) + '/file-icon/webm.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -95,7 +97,7 @@ class Common {
                 type: 'foaf:Document',
                 format: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                 thumbnail: {
-                    '@id': ctx.request.origin + '/file-icon/docx.svg',
+                    '@id': getBaseUrl(ctx) + '/file-icon/docx.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -113,7 +115,7 @@ class Common {
     }
 
     static getIIIFThumbnail(relativePath: string, ctx: Router.RouterContext) {
-        return ctx.request.origin + '/iiif/image/' + relativePath + '/full/!100,100/0/default.jpg'
+        return getBaseUrl(ctx) + '/iiif/image/' + relativePath + '/full/!100,100/0/default.jpg'
     }
 
     static getUriByObjectPath(objectPath: string, ctx: Router.RouterContext, type: string) {
@@ -127,13 +129,13 @@ class Common {
             relativePath = 'demo';
         }
 
-        return ctx.request.origin + '/iiif/' + type + '/' + relativePath;
+        return getBaseUrl(ctx) + '/iiif/' + type + '/' + relativePath;
     }
 
     static getFileId(ctx: Router.RouterContext, objectPath: string) {
         const relativePath = this.getRelativePath(objectPath);
 
-        return ctx.request.origin + '/file/' + relativePath;
+        return getBaseUrl(ctx) + '/file/' + relativePath;
     }
 
     static getDemoPath() {

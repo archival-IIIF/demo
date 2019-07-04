@@ -1,5 +1,6 @@
 import * as Router from 'koa-router';
 import serveImage from './internal';
+import getBaseUrl from '../lib/BaseUrl';
 
 const router: Router = new Router();
 const imageWith = 1840;
@@ -13,22 +14,22 @@ router.get('/collection/image', ctx => {
     arielPresentation.thumbnail = undefined;
 
     ctx.body = {
-        '@id': ctx.request.origin + '/collection/image',
+        '@id': getBaseUrl(ctx) + '/collection/image',
         '@type': 'sc:Collection',
         label: 'Image test case',
         '@context': 'http://iiif.io/api/collection/2/context.json',
         license: 'http://creativecommons.org/licenses/by-sa/3.0/',
         manifests: [
             {
-                '@id': ctx.request.origin + '/manifest/ariel',
+                '@id': getBaseUrl(ctx) + '/manifest/ariel',
                 '@type': 'sc:Manifest',
                 label: 'Ariel_-_LoC_4a15521.jpg',
                 thumbnail: {
-                    '@id': ctx.request.origin + '/image/ariel/full/!100,100/0/default.jpg',
+                    '@id': getBaseUrl(ctx) + '/image/ariel/full/!100,100/0/default.jpg',
                     '@type': "dctypes:Image",
                     format: "image/jpeg",
                     service: {
-                        '@id': ctx.request.origin + '/image/ariel',
+                        '@id': getBaseUrl(ctx) + '/image/ariel',
                         protocol: "http://iiif.io/api/image",
                         width: imageWith,
                         height: imageHeight,
@@ -47,17 +48,17 @@ router.get('/manifest/ariel', ctx => {
 
 function getArielPresentation(ctx: Router.RouterContext) {
     return {
-        '@id': ctx.request.origin + '/manifest/ariel',
+        '@id': getBaseUrl(ctx) + '/manifest/ariel',
         '@type': 'sc:Manifest',
         label: 'Ariel_-_LoC_4a15521.jpg',
         '@context': 'http://iiif.io/api/collection/2/context.json',
-        within: ctx.request.origin + '/collection/image',
+        within: getBaseUrl(ctx) + '/collection/image',
         thumbnail: {
-            '@id': ctx.request.origin + '/image/ariel/full/!100,100/0/default.jpg',
+            '@id': getBaseUrl(ctx) + '/image/ariel/full/!100,100/0/default.jpg',
             '@type': "dctypes:Image",
             format: "image/jpeg",
             service: {
-                '@id': ctx.request.origin + '/image/ariel',
+                '@id': getBaseUrl(ctx) + '/image/ariel',
                 protocol: "http://iiif.io/api/image",
                 width: imageWith,
                 height: imageHeight,
@@ -79,32 +80,32 @@ function getArielPresentation(ctx: Router.RouterContext) {
             }
         ],
         sequences: [{
-            '@id': ctx.request.origin + '/sequence/ariel',
+            '@id': getBaseUrl(ctx) + '/sequence/ariel',
             '@type': 'sc:Sequence',
             canvases: [{
-                '@id': ctx.request.origin + '/canvas/ariel',
+                '@id': getBaseUrl(ctx) + '/canvas/ariel',
                 '@type': 'sc:Canvas',
                 width: imageWith,
                 height: imageHeight,
                 images: [{
-                    '@id': ctx.request.origin + '/annotation/ariel/',
+                    '@id': getBaseUrl(ctx) + '/annotation/ariel/',
                     '@type': 'oa:Annotation',
                     motivation: 'sc:painting',
                     resource: {
-                        '@id': ctx.request.origin + '/image/ariel/full/full/0/default.jpg',
+                        '@id': getBaseUrl(ctx) + '/image/ariel/full/full/0/default.jpg',
                         '@type': 'dctypes:Image',
                         format: 'image/jpeg',
                         width: imageWith,
                         height: imageHeight,
                         service: {
-                            '@id': ctx.request.origin + '/image/ariel',
+                            '@id': getBaseUrl(ctx) + '/image/ariel',
                             protocol: 'http://iiif.io/api/image',
                             width: imageWith,
                             height: imageHeight,
                             profile: 'http://iiif.io/api/image/2/level2.json'
                         }
                     },
-                    "on": ctx.request.origin + '/canvas/ariel'
+                    "on": getBaseUrl(ctx) + '/canvas/ariel'
                 }]
             }]
         }]
@@ -114,7 +115,7 @@ function getArielPresentation(ctx: Router.RouterContext) {
 
 router.get('/image/ariel/info.json', ctx => {
     ctx.body = {
-        '@id': ctx.request.origin + '/image/ariel',
+        '@id': getBaseUrl(ctx) + '/image/ariel',
         "protocol": "http://iiif.io/api/image",
         "width": imageWith,
         "height": imageHeight,

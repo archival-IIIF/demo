@@ -5,6 +5,8 @@ import download from '../lib/Download';
 import common from './common';
 import serveImage from '../image/internal';
 import * as sizeOf from 'image-size';
+import getBaseUrl from '../lib/BaseUrl';
+
 
 const router: Router = new Router();
 
@@ -71,7 +73,7 @@ router.get('/iiif/image/:image/info.json', ctx => {
     const imageWith = dimensions.width;
     const imageHeight = dimensions.height;
     ctx.body = {
-        '@id': ctx.request.origin + '/iiif/image/' + ctx.params.image,
+        '@id': getBaseUrl(ctx) + '/iiif/image/' + ctx.params.image,
         "protocol": "http://iiif.io/api/image",
         "width": imageWith,
         "height": imageHeight,

@@ -3,9 +3,9 @@ import * as fs from 'fs';
 import * as path from 'path';
 import common from './common';
 import * as sizeOf from 'image-size';
+import getBaseUrl from '../lib/BaseUrl';
 
 const router: Router = new Router();
-
 
 router.get('/iiif/manifest/:id', ctx => {
 
@@ -79,7 +79,7 @@ router.get('/iiif/manifest/:id', ctx => {
                 '@type': mediaTypeAndFormat.type,
                 'format': mediaTypeAndFormat.format,
                 'rendering': {
-                    '@id': ctx.request.origin + '/file/txt/original',
+                    '@id': getBaseUrl(ctx) + '/file/txt/original',
                     'label': 'Original copy',
                     'format': 'text/plain'
                 }

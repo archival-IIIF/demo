@@ -4,12 +4,10 @@ import * as path from 'path';
 import download from '../lib/Download';
 import common from './common';
 import serveImage from '../image/internal';
-import * as sizeOf from 'image-size';
+import {imageSize} from 'image-size';
 import getBaseUrl from '../lib/BaseUrl';
 
-
 const router: Router = new Router();
-
 
 router.get('/file/:id', async ctx => {
 
@@ -69,7 +67,7 @@ router.get('/iiif/image/:image/:region/:size/:rotation/:quality.:format', async 
 });
 
 router.get('/iiif/image/:image/info.json', ctx => {
-    const dimensions = sizeOf(common.getFullPath(ctx.params.image));
+    const dimensions = imageSize(common.getFullPath(ctx.params.image));
     const imageWith = dimensions.width;
     const imageHeight = dimensions.height;
     ctx.body = {

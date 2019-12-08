@@ -1,5 +1,6 @@
-if (process.env.NODE_ENV !== 'production')
-    require('dotenv').load();
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 module.exports = {
 

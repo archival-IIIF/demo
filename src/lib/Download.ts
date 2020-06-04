@@ -12,7 +12,7 @@ async function download(ctx: Router.RouterContext, filePath: string, fileName?: 
         if (!fileName) {
             fileName = path.basename(filePath);
         }
-        const contentType = mime.contentType(filePath);
+        const contentType = mime.lookup(filePath);
         if (contentType) {
             ctx.set('Content-Type', contentType);
         }

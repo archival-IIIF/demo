@@ -103,6 +103,17 @@ class Common {
             };
         }
 
+        if (extension === '.pdf') {
+            return {
+                type: 'foaf:Document',
+                format: 'application/pdf',
+                thumbnail: {
+                    '@id': getBaseUrl(ctx) + '/file-icon/pdf.svg',
+                    format: 'image/svg+xml'
+                }
+            };
+        }
+
         return {
             type: 'foaf:Document',
             format: 'text/plain',

@@ -4,6 +4,7 @@ import * as path from 'path';
 import common from './common';
 import {imageSize} from "image-size";
 import getBaseUrl from '../lib/BaseUrl';
+import * as mime from 'mime-types';
 
 const router: Router = new Router();
 
@@ -79,9 +80,9 @@ router.get('/iiif/manifest/:id', ctx => {
                 '@type': mediaTypeAndFormat.type,
                 'format': mediaTypeAndFormat.format,
                 'rendering': {
-                    '@id': getBaseUrl(ctx) + '/file/txt/original',
+                    '@id': common.getFileId(ctx, objectPath),
                     'label': 'Original copy',
-                    'format': 'text/plain'
+                    'format': mediaTypeAndFormat.format
                 }
             }]
         }]

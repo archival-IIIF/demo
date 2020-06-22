@@ -71,14 +71,14 @@ router.get('/iiif/image/:image/info.json', ctx => {
     const imageWith = dimensions.width;
     const imageHeight = dimensions.height;
     ctx.body = {
-        '@id': getBaseUrl(ctx) + '/iiif/image/' + ctx.params.image,
+        'id': getBaseUrl(ctx) + '/iiif/image/' + ctx.params.image,
         "protocol": "http://iiif.io/api/image",
         "width": imageWith,
         "height": imageHeight,
         "sizes": [],
-        "@context": "http://iiif.io/api/image/2/context.json",
+        "@context": "http://iiif.io/api/image/3/context.json",
         "profile": [
-            "http://iiif.io/api/image/2/level2.json",
+            "http://iiif.io/api/image/3/level2.json",
             {
                 "supports": ["canonicalLinkHeader", "profileLinkHeader", "mirroring", "rotationArbitrary", "regionSquare"],
                 "qualities": ["default", "color", "gray", "bitonal"],

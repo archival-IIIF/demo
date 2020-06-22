@@ -27,63 +27,72 @@ router.get('/iiif/manifest/:id', ctx => {
     const mediaTypeAndFormat = common.getMediaTypeAndFormat(objectPath, ctx);
 
     let output: any = {
-        '@id': common.getUriByObjectPath(objectPath, ctx, 'manifest'),
-        '@type': 'sc:Manifest',
+        id: common.getUriByObjectPath(objectPath, ctx, 'manifest'),
+        type: 'Manifest',
         label: path.basename(objectPath),
-        '@context': 'http://iiif.io/api/collection/2/context.json',
-        within: common.getUriByObjectPath(parentPath, ctx, 'collection'),
+        '@context': 'http://iiif.io/api/presentation/3/context.json',
+        partOf: [{id: common.getUriByObjectPath(parentPath, ctx, 'collection'), type: 'Collection'}],
         thumbnail: mediaTypeAndFormat.thumbnail,
         metadata: common.getMetadata(objectPath)
     };
 
-    if (mediaTypeAndFormat.type === 'dctypes:Image') {
+    if (mediaTypeAndFormat.type === 'Image') {
         const dimensions = imageSize(objectPath);
         const imageWith = dimensions.width;
         const imageHeight = dimensions.height;
-        output.sequences = [{
-            '@id': common.getUriByObjectPath(objectPath, ctx, 'sequence'),
-            '@type': 'sc:Sequence',
-            canvases: [{
-                '@id': common.getUriByObjectPath(objectPath, ctx, 'canvas'),
-                '@type': 'sc:Canvas',
-                width: imageWith,
-                height: imageHeight,
-                images: [{
-                    '@id': common.getUriByObjectPath(objectPath, ctx, 'annotation'),
-                    '@type': 'oa:Annotation',
-                    motivation: 'sc:painting',
-                    resource: {
-                        '@id': common.getIIIFThumbnail(objectPath, ctx, ),
-                        '@type': 'dctypes:Image',
+        output.items = [{
+            id: common.getUriByObjectPath(objectPath, ctx, 'canvas'),
+            type: 'Canvas',
+            width: imageWith,
+            height: imageHeight,
+            items: [{
+                id: common.getUriByObjectPath(objectPath, ctx, 'annotationPage'),
+                type: 'AnnotationPage',
+                items: [{
+                    id: common.getUriByObjectPath(objectPath, ctx, 'annotation'),
+                    type: 'Annotation',
+                    motivation: 'painting',
+                    body: {
+                        id: common.getIIIFThumbnail(objectPath, ctx, ),
+                        type: 'Image',
                         format: 'image/jpeg',
                         width: imageWith,
                         height: imageHeight,
                         service: {
-                            '@id': common.getUriByObjectPath(objectPath, ctx, 'image'),
-                            protocol: 'http://iiif.io/api/image',
+                            id: common.getUriByObjectPath(objectPath, ctx, 'image'),
+                            type: 'ImageService3',
                             width: imageWith,
                             height: imageHeight,
                             sizes: [],
-                            profile: 'http://iiif.io/api/image/2/level2.json'
+                            profile: 'level2'
                         }
                     },
-                    "on": common.getUriByObjectPath(objectPath, ctx, 'canvas')
+                    target: common.getUriByObjectPath(objectPath, ctx, 'canvas')
                 }]
             }]
         }]
     } else {
-        output.mediaSequences = [{
-            '@id': common.getUriByObjectPath(parentPath, ctx, 'sequence'),
-            '@type': 'ixif:MediaSequence',
-            'elements': [{
-                '@id': common.getFileId(ctx, objectPath),
-                '@type': mediaTypeAndFormat.type,
-                'format': mediaTypeAndFormat.format,
-                'rendering': {
-                    '@id': common.getFileId(ctx, objectPath),
-                    'label': 'Original copy',
-                    'format': mediaTypeAndFormat.format
-                }
+        output.items = [{
+            id: common.getUriByObjectPath(parentPath, ctx, 'canvas'),
+            type: 'Canvas',
+            items: [{
+                id: common.getUriByObjectPath(objectPath, ctx, 'annotationPage'),
+                type: 'AnnotationPage',
+                items: [{
+                    id: common.getUriByObjectPath(objectPath, ctx, 'annotation'),
+                    type: 'Annotation',
+                    motivation: 'painting',
+                    body: {
+                        id: common.getFileId(ctx, objectPath),
+                        type: mediaTypeAndFormat.type,
+                        format: mediaTypeAndFormat.format,
+                        rendering: {
+                            id: common.getFileId(ctx, objectPath),
+                            label: {en: ['Original copy'], de: ['Originalkopie']},
+                            format: mediaTypeAndFormat.format
+                        }
+                    }
+                }]
             }]
         }]
     }

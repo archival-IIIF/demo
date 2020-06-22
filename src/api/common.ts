@@ -18,7 +18,7 @@ class Common {
                 type: 'dctypes:Sound',
                 format: 'audio/mpeg',
                 thumbnail: {
-                    '@id': getBaseUrl(ctx) + '/file-icon/mp3.svg',
+                    'id': getBaseUrl(ctx) + '/file-icon/mp3.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -29,7 +29,7 @@ class Common {
                 type: 'dctypes:Sound',
                 format: 'audio/mpeg',
                 thumbnail: {
-                    '@id': getBaseUrl(ctx)  + '/file-icon/ogg.svg',
+                    'id': getBaseUrl(ctx)  + '/file-icon/ogg.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -38,10 +38,10 @@ class Common {
         if (extension === '.jpg') {
             const relativePath = this.getRelativePath(objectPath);
             return {
-                type: 'dctypes:Image',
+                type: 'Image',
                 format: 'image/jpeg',
                 thumbnail: {
-                    '@id': this.getIIIFThumbnail(relativePath, ctx),
+                    'id': this.getIIIFThumbnail(relativePath, ctx),
                     format: 'image/jpeg'
                 }
             };
@@ -50,10 +50,10 @@ class Common {
         if (extension === '.png') {
             const relativePath = this.getRelativePath(objectPath);
             return {
-                type: 'dctypes:Image',
+                type: 'Image',
                 format: 'image/png',
                 thumbnail: {
-                    '@id': this.getIIIFThumbnail(relativePath, ctx),
+                    'id': this.getIIIFThumbnail(relativePath, ctx),
                     format: 'image/png'
                 }
             };
@@ -64,7 +64,7 @@ class Common {
                 type: 'dctypes:Document',
                 format: 'video/mp4',
                 thumbnail: {
-                    '@id': getBaseUrl(ctx) + '/file-icon/mp4.svg',
+                    'id': getBaseUrl(ctx) + '/file-icon/mp4.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -75,7 +75,7 @@ class Common {
                 type: 'dctypes:Document',
                 format: 'video/ogg',
                 thumbnail: {
-                    '@id': getBaseUrl(ctx) + '/file-icon/ogv.svg',
+                    'id': getBaseUrl(ctx) + '/file-icon/ogv.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -86,7 +86,7 @@ class Common {
                 type: 'dctypes:Document',
                 format: 'video/webm',
                 thumbnail: {
-                    '@id': getBaseUrl(ctx) + '/file-icon/webm.svg',
+                    'id': getBaseUrl(ctx) + '/file-icon/webm.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -97,7 +97,7 @@ class Common {
                 type: 'foaf:Document',
                 format: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                 thumbnail: {
-                    '@id': getBaseUrl(ctx) + '/file-icon/docx.svg',
+                    'id': getBaseUrl(ctx) + '/file-icon/docx.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -108,7 +108,7 @@ class Common {
                 type: 'foaf:Document',
                 format: 'application/pdf',
                 thumbnail: {
-                    '@id': getBaseUrl(ctx) + '/file-icon/pdf.svg',
+                    'id': getBaseUrl(ctx) + '/file-icon/pdf.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -210,7 +210,7 @@ class Common {
         if (Pronoms.has(extension)) {
             const pronom = Pronoms.get(extension);
             metadata.push({
-                label: 'Original file type',
+                label: {en: ["File type"], de: ['Dateityp']},
                 value: '<a href=\"https://www.nationalarchives.gov.uk/PRONOM/Format/proFormatSearch.aspx?status='+
                 'detailReport&id=' + pronom.id + '\"> '+pronom.name+' (.' + extension + ')</a>'
             });
@@ -218,11 +218,11 @@ class Common {
 
         const stats = fs.statSync(objectPath);
         metadata.push({
-            label: 'Original file size',
+            label: {en: ["File size"], de: ['Dateigrösse']},
             value: filesize(stats.size)
         });
         metadata.push({
-            label: 'Original modification date',
+            label: {en: ["Modification date"], de: ['Veränderungsdatum']},
             value: stats.mtime.toLocaleString()
         });
 

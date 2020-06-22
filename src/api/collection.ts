@@ -27,15 +27,15 @@ router.get('/iiif/collection/:id', ctx => {
     }
 
     let output: any = {
-        '@id': common.getUriByObjectPath(objectPath, ctx, 'collection'),
-        '@type': 'sc:Collection',
+        id: common.getUriByObjectPath(objectPath, ctx, 'collection'),
+        type: 'Collection',
         label: path.basename(objectPath),
-        '@context': 'http://iiif.io/api/collection/2/context.json'
+        '@context': 'http://iiif.io/api/presentation/3/context.json'
     };
 
     if (id !== '/') {
         const parentPath = path.resolve(objectPath, '..');
-        output.within = common.getUriByObjectPath(parentPath, ctx, 'collection');
+        output.partOf = [{id: common.getUriByObjectPath(parentPath, ctx, 'collection'), type: 'Collection'}];
     }
 
     fs.readdirSync(objectPath).map((name: string) => {
@@ -43,14 +43,14 @@ router.get('/iiif/collection/:id', ctx => {
         const subObjectPath = path.join(objectPath, name);
 
         if (fs.lstatSync(subObjectPath).isDirectory()) {
-            if (!output.hasOwnProperty('collections')) {
-                output.collections = [];
+            if (!output.hasOwnProperty('items')) {
+                output.items = [];
             }
 
-            output.collections.push(
+            output.items.push(
                 {
-                    '@id': common.getUriByObjectPath(subObjectPath, ctx, 'collection'),
-                    '@type': 'sc:Collection',
+                    id: common.getUriByObjectPath(subObjectPath, ctx, 'collection'),
+                    type: 'Collection',
                     label: name,
                 }
             );
@@ -64,22 +64,22 @@ router.get('/iiif/collection/:id', ctx => {
                 return;
             }
 
-            if (!output.hasOwnProperty('manifests')) {
-                output.manifests = [];
+            if (!output.hasOwnProperty('items')) {
+                output.items = [];
             }
 
             const mediaTypeAndFormat = common.getMediaTypeAndFormat(subObjectPath, ctx);
 
             let manifest = {
-                '@id': common.getUriByObjectPath(subObjectPath, ctx, 'manifest'),
-                '@type': 'sc:Manifest',
+                'id': common.getUriByObjectPath(subObjectPath, ctx, 'manifest'),
+                'type': 'Manifest',
                 label: name,
                 thumbnail: mediaTypeAndFormat.thumbnail,
             };
 
             manifest = common.addMetadata(manifest, subObjectPath);
 
-            output.manifests.push(manifest);
+            output.items.push(manifest);
         }
     });
 

@@ -1,4 +1,7 @@
 {
   "label": "Amsterdam",
-  "description": "A fictitious package with <a href=\"https://commons.wikimedia.org/wiki/Category:Amsterdam\">commons</a> of the city of <a href=\"https://en.wikipedia.org/wiki/Amsterdam\">Amsterdam</a>"
+  "description": {
+    "en": ["A fictitious package with <a href=\"https://commons.wikimedia.org/wiki/Category:Amsterdam\">commons</a> of the city of <a href=\"https://en.wikipedia.org/wiki/Amsterdam\">Amsterdam</a>"],
+    "de": ["Ein fiktives Paket mit <a href=\"https://commons.wikimedia.org/wiki/Category:Amsterdam\">commons</a> der Stadt <a href=\"https://de.wikipedia.org/wiki/Amsterdam\">Amsterdam</a>"]
+  }
 }

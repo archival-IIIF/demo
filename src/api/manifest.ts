@@ -37,6 +37,8 @@ router.get('/iiif/manifest/:id', ctx => {
         metadata: common.getMetadata(objectPath)
     };
 
+    output = common.addMetadata(output, objectPath);
+
     if (mediaTypeAndFormat.type === 'Image') {
         const dimensions = imageSize(objectPath);
         const imageWith = dimensions.width;
@@ -73,6 +75,20 @@ router.get('/iiif/manifest/:id', ctx => {
             }]
         }]
     } else {
+
+        let rendering = [{
+            id: common.getFileId(ctx, objectPath),
+            label: {en: ['Original copy'], de: ['Originalkopie']},
+            format: mediaTypeAndFormat.format
+        }];
+        if (output.hasOwnProperty('rendering')) {
+            rendering = output.rendering;
+            for(const r of rendering) {
+                r.id = getBaseUrl(ctx) +  r.id
+            }
+            output.rendering = undefined;
+        }
+
         output.items = [{
             id: common.getUriByObjectPath(parentPath, ctx, 'canvas'),
             type: 'Canvas',
@@ -87,18 +103,13 @@ router.get('/iiif/manifest/:id', ctx => {
                         id: common.getFileId(ctx, objectPath),
                         type: mediaTypeAndFormat.type,
                         format: mediaTypeAndFormat.format,
-                        rendering: {
-                            id: common.getFileId(ctx, objectPath),
-                            label: {en: ['Original copy'], de: ['Originalkopie']},
-                            format: mediaTypeAndFormat.format
-                        }
+                        rendering
                     }
                 }]
             }]
         }]
     }
 
-    output = common.addMetadata(output, objectPath);
 
     ctx.body = output;
 

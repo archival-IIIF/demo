@@ -3,6 +3,7 @@ import Pronoms from './pronoms';
 import * as fs from 'fs';
 import * as path from 'path';
 import getBaseUrl from '../lib/BaseUrl';
+import {throws} from "assert";
 
 const filesize = require('filesize');
 
@@ -165,6 +166,24 @@ class Common {
         input = decodeURIComponent(input);
         input = input.replace(/\+\+/g, '\\');
         return input.replace(/--/g, '\/');
+    }
+
+    static decodeDir(root: string, input: string) {
+        let output = root;
+
+        const tmpArray =  input.split('--');
+        for (const dirName of tmpArray) {
+            if (dirName.startsWith('.')) {
+                throw 'Error 1';
+            }
+
+            output = path.join(output, dirName);
+            if (!fs.existsSync(output)) {
+                throw 'Error 2';
+            }
+        }
+
+        return output;
     }
 
     static encode(input: string) {

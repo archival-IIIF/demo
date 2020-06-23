@@ -85,6 +85,12 @@ router.get('/iiif/collection/:id', ctx => {
 
     output = common.addMetadata(output, objectPath);
 
+    output.rendering = {
+        id: ctx.request.origin + '/zip/' + ctx.params.id,
+        label: {en: ['Download folder'], de: ['Ordner herunterladen']},
+        format: 'application/zip'
+    }
+
     ctx.body = output;
 
 });

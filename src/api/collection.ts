@@ -7,19 +7,9 @@ import getBaseUrl from "../lib/BaseUrl";
 const router: Router = new Router();
 
 router.get('/iiif/collection/:id', ctx => {
-
-    let id: string | false = '/';
-    if (ctx.params.id !== 'demo') {
-        id = common.decodeDataPath(ctx.params.id, true);
-        if (!id) {
-            return ctx.throw(404);
-        }
-    }
-
-
-    const objectPath = common.decodeDataPath(ctx.params.id !== 'demo' ? ctx.params.id: '');
+    const isRoot = ctx.params.id === 'demo';
+    const objectPath = common.decodeDataPath(isRoot ? '': ctx.params.id);
     if (!objectPath) {
-        console.log('bbb');
        return ctx.throw(404);
     }
 
@@ -34,7 +24,7 @@ router.get('/iiif/collection/:id', ctx => {
         '@context': 'http://iiif.io/api/presentation/3/context.json'
     };
 
-    if (id !== '/') {
+    if (!isRoot) {
         const parentPath = path.resolve(objectPath, '..');
         output.partOf = [{id: common.getUriByObjectPath(parentPath, ctx, 'collection'), type: 'Collection'}];
     }

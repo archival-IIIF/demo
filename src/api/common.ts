@@ -141,7 +141,7 @@ class Common {
             relativePath = 'demo';
         }
 
-        return getBaseUrl(ctx) + '/iiif/' + type + '/' + relativePath;
+        return getBaseUrl(ctx) + '/iiif/' + type + '/' + this.encode(relativePath);
     }
 
     static getFileId(ctx: Router.RouterContext, objectPath: string) {
@@ -162,19 +162,19 @@ class Common {
         return path.join(this.getDemoPath(), 'data');
     }
 
-    static decodeDataPath(input: string, relative?: boolean): string | false {
-        return this.decodePath(this.getDemoDataPath(), input, relative);
+    static decodeDataPath(input: string): string | false {
+        return this.decodePath(this.getDemoDataPath(), input);
     }
 
-    static decodeCachePath(input: string, relative?: boolean): string | false {
-        return this.decodePath(this.getCachePath(), input, relative);
+    static decodeCachePath(input: string): string | false {
+        return this.decodePath(this.getCachePath(), input);
     }
 
-    static decodePath(root: string, input: string, relative?: boolean): string | false {
+    static decodePath(root: string, input: string): string | false {
 
         let output = root;
 
-        const tmpArray =  input.split('--');
+        const tmpArray =  input.replace(/__/g, ' ').split('--');
         for (let dirName of tmpArray) {
             dirName = this.basename(dirName);
             if (dirName.startsWith('.')) {
@@ -188,16 +188,14 @@ class Common {
             }
         }
 
-        if (relative === true) {
-            return '/' + output.substr(root.length);
-        }
         return output;
     }
 
     static encode(input: string) {
-        input = input.replace(/\\/g, '++');
+        input = input.replace(/\\/g, '--');
         input = input.replace(/\//g, '--');
-        return encodeURIComponent(input);
+        input = input.replace(/ /g, '__');
+        return input;
     }
 
     static addMetadata(output: any, objectPath: string) {

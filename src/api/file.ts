@@ -11,12 +11,9 @@ const router: Router = new Router();
 
 router.get('/file/:id', async ctx => {
 
-    const id = common.decode(ctx.params.id);
-    const objectPath = path.join(common.getDemoDataPath(), id);
-
-
-    if (!fs.existsSync(objectPath)) {
-        ctx.throw(404)
+    const objectPath = common.decodeDataPath(ctx.params.id);
+    if (!objectPath) {
+        return ctx.throw(404);
     }
 
     if (fs.lstatSync(objectPath).isDirectory()) {
@@ -24,17 +21,37 @@ router.get('/file/:id', async ctx => {
     }
 
     await download(ctx, objectPath);
+
+
+
 });
 
 router.get('/iiif/image/:image/:region/:size/:rotation/:quality.:format', async ctx => {
 
+    const image = common.basename(ctx.params.image);
+    const region = common.basename(ctx.params.region);
+    const size = common.basename(ctx.params.size);
+    const rotation = common.basename(ctx.params.rotation);
+    const quality = common.basename(ctx.params.quality);
+    const format = common.basename(ctx.params.format);
+    if (
+        image.startsWith('.') ||
+        region.startsWith('.') ||
+        size.startsWith('.') ||
+        rotation.startsWith('.') ||
+        quality.startsWith('.') ||
+        format.startsWith('.')
+    ) {
+        return ctx.throw(400);
+    }
+
     const tilePath = path.join(
         common.getCachePath(),
-        ctx.params.image,
-        ctx.params.region,
-        ctx.params.size,
-        ctx.params.rotation,
-        ctx.params.quality + '.' + ctx.params.format
+        image,
+        region,
+        size,
+        rotation,
+        quality + '.' + format
     );
 
     if (fs.existsSync(tilePath)) {
@@ -42,17 +59,19 @@ router.get('/iiif/image/:image/:region/:size/:rotation/:quality.:format', async 
         return;
     }
 
-    const id = common.decode(ctx.params.image);
-    const objectPath = path.join(common.getDemoDataPath(), id);
+    const objectPath = common.decodeDataPath(ctx.params.id)
+    if (!objectPath) {
+        return ctx.throw(404);
+    }
     const item = {
         uri: objectPath
     };
     let result = await serveImage(item, {
-        region: ctx.params.region,
-        size: ctx.params.size,
-        rotation: ctx.params.rotation,
-        quality: ctx.params.quality,
-        format: ctx.params.format
+        region: region,
+        size: size,
+        rotation: rotation,
+        quality: quality,
+        format: format
     });
 
     ctx.body = result.image;
@@ -67,22 +86,26 @@ router.get('/iiif/image/:image/:region/:size/:rotation/:quality.:format', async 
 });
 
 router.get('/iiif/image/:image/info.json', ctx => {
-    const dimensions = imageSize(common.getFullPath(ctx.params.image));
+    const objectPath = common.decodeDataPath(ctx.params.image);
+    if (!objectPath) {
+        return ctx.throw(404);
+    }
+    const dimensions = imageSize(objectPath);
     const imageWith = dimensions.width;
     const imageHeight = dimensions.height;
     ctx.body = {
-        'id': getBaseUrl(ctx) + '/iiif/image/' + ctx.params.image,
-        "protocol": "http://iiif.io/api/image",
-        "width": imageWith,
-        "height": imageHeight,
-        "sizes": [],
+        id: getBaseUrl(ctx) + '/iiif/image/' + ctx.params.image,
+        protocol: "http://iiif.io/api/image",
+        width: imageWith,
+        height: imageHeight,
+        sizes: [],
         "@context": "http://iiif.io/api/image/3/context.json",
-        "profile": [
+        profile: [
             "http://iiif.io/api/image/3/level2.json",
             {
-                "supports": ["canonicalLinkHeader", "profileLinkHeader", "mirroring", "rotationArbitrary", "regionSquare"],
-                "qualities": ["default", "color", "gray", "bitonal"],
-                "formats": ["jpg", "png", "gif", "webp"]
+                supports: ["canonicalLinkHeader", "profileLinkHeader", "mirroring", "rotationArbitrary", "regionSquare"],
+                qualities: ["default", "color", "gray", "bitonal"],
+                formats: ["jpg", "png", "gif", "webp"]
             }
         ]
     };

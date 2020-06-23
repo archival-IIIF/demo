@@ -10,9 +10,10 @@ const router: Router = new Router();
 
 router.get('/iiif/manifest/:id', ctx => {
 
-    const id = common.decode(ctx.params.id);
-    const objectPath = path.join(common.getDemoDataPath(), id);
-
+    const objectPath = common.decodeDataPath(ctx.params.id)
+    if (!objectPath) {
+        return ctx.throw(404);
+    }
 
     if (!fs.existsSync(objectPath)) {
         ctx.throw(404)

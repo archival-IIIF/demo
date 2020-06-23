@@ -7,19 +7,19 @@ const router: Router = new Router();
 
 router.get('/iiif/collection/:id', ctx => {
 
-    let id = '/';
-    if (ctx.params.id !== undefined) {
-        id = common.decode(ctx.params.id);
+    let id: string | false = '/';
+    if (ctx.params.id !== 'demo') {
+        id = common.decodeDataPath(ctx.params.id, true);
+        if (!id) {
+            return ctx.throw(404);
+        }
     }
-    if (id === 'demo') {
-        id = '/';
-    }
-
-    const objectPath = path.join(common.getDemoDataPath(), id);
 
 
-    if (!fs.existsSync(objectPath)) {
-        ctx.throw(404)
+    const objectPath = common.decodeDataPath(ctx.params.id !== 'demo' ? ctx.params.id: '');
+    if (!objectPath) {
+        console.log('bbb');
+       return ctx.throw(404);
     }
 
     if (!fs.lstatSync(objectPath).isDirectory()) {

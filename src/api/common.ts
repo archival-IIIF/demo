@@ -162,27 +162,35 @@ class Common {
         return path.join(this.getDemoPath(), 'data');
     }
 
-    static decode(input: string) {
-        input = decodeURIComponent(input);
-        input = input.replace(/\+\+/g, '\\');
-        return input.replace(/--/g, '\/');
+    static decodeDataPath(input: string, relative?: boolean): string | false {
+        return this.decodePath(this.getDemoDataPath(), input, relative);
     }
 
-    static decodeDir(root: string, input: string) {
+    static decodeCachePath(input: string, relative?: boolean): string | false {
+        return this.decodePath(this.getCachePath(), input, relative);
+    }
+
+    static decodePath(root: string, input: string, relative?: boolean): string | false {
+
         let output = root;
 
         const tmpArray =  input.split('--');
-        for (const dirName of tmpArray) {
+        for (let dirName of tmpArray) {
+            dirName = this.basename(dirName);
             if (dirName.startsWith('.')) {
-                throw 'Error 1';
+                console.log('yyy')
+                return false;
             }
 
             output = path.join(output, dirName);
             if (!fs.existsSync(output)) {
-                throw 'Error 2';
+                return false;
             }
         }
 
+        if (relative === true) {
+            return '/' + output.substr(root.length);
+        }
         return output;
     }
 
@@ -190,11 +198,6 @@ class Common {
         input = input.replace(/\\/g, '++');
         input = input.replace(/\//g, '--');
         return encodeURIComponent(input);
-    }
-
-    static getFullPath(input: string) {
-        const id = this.decode(input);
-        return path.join(this.getDemoDataPath(), id);
     }
 
     static addMetadata(output: any, objectPath: string) {
@@ -247,6 +250,11 @@ class Common {
 
         return metadata;
     }
+
+    static basename(path: string) {
+        return path.split('/').reverse()[0];
+    }
+
 }
 
 export default Common;

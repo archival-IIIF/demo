@@ -2,6 +2,7 @@ import * as Router from 'koa-router';
 import * as fs from 'fs';
 import * as path from 'path';
 import common from './common';
+import getBaseUrl from "../lib/BaseUrl";
 
 const router: Router = new Router();
 
@@ -86,7 +87,7 @@ router.get('/iiif/collection/:id', ctx => {
     output = common.addMetadata(output, objectPath);
 
     output.rendering = {
-        id: ctx.request.origin + '/zip/' + ctx.params.id,
+        id: getBaseUrl(ctx) + '/zip/' + ctx.params.id,
         label: {en: ['Download folder'], de: ['Ordner herunterladen']},
         format: 'application/zip'
     }

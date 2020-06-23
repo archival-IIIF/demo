@@ -5,17 +5,20 @@
   "rendering": [
     {
       "id": "/file/manifestation/access",
-      "label": "Protocol 2002-04-11.pdf (Access copy)",
+      "label": {"none": ["Protocol 2002-04-11.pdf (Access copy)"]},
+      "type": "Text",
       "format": "application/pdf"
     },
     {
       "id": "/file/manifestation/original",
-      "label": "Protocol 2002-04-11.pdf (Preservation copy)",
+      "label": {"none": ["Protocol 2002-04-11.pdf (Preservation copy)"]},
+      "type": "Text",
       "format": "application/pdf"
     },
     {
       "id": "/file/manifestation/original",
-      "label": "Protocol 2002-04-11.docx (Original master)",
+      "label": {"none": ["Protocol 2002-04-11.docx (Original master)"]},
+      "type": "Text",
       "format": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     }
   ]

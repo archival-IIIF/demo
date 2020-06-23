@@ -90,8 +90,10 @@ router.get('/iiif/manifest/:id', ctx => {
         }
 
         output.items = [{
-            id: common.getUriByObjectPath(parentPath, ctx, 'canvas'),
+            id: common.getUriByObjectPath(objectPath, ctx, 'canvas'),
             type: 'Canvas',
+            width: 1,
+            height: 1,
             items: [{
                 id: common.getUriByObjectPath(objectPath, ctx, 'annotationPage'),
                 type: 'AnnotationPage',
@@ -102,12 +104,13 @@ router.get('/iiif/manifest/:id', ctx => {
                     body: {
                         id: common.getFileId(ctx, objectPath),
                         type: mediaTypeAndFormat.type,
-                        format: mediaTypeAndFormat.format,
-                        rendering
-                    }
+                        format: mediaTypeAndFormat.format
+                    },
+                    target:  common.getUriByObjectPath(objectPath, ctx, 'canvas'),
                 }]
-            }]
-        }]
+            }],
+            rendering,
+        }];
     }
 
 

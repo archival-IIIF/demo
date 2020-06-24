@@ -51,7 +51,7 @@ router.get('/iiif/collection/:id', ctx => {
                 return;
             }
 
-            if (name.startsWith('___')) {
+            if (name.startsWith('@@')) {
                 return;
             }
 

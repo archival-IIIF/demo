@@ -178,7 +178,6 @@ class Common {
         for (let dirName of tmpArray) {
             dirName = this.basename(dirName);
             if (dirName.startsWith('.')) {
-                console.log('yyy')
                 return false;
             }
 

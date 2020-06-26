@@ -59,7 +59,7 @@ router.get('/iiif/image/:image/:region/:size/:rotation/:quality.:format', async 
         return;
     }
 
-    const objectPath = common.decodeDataPath(ctx.params.id)
+    const objectPath = common.decodeDataPath(ctx.params.image)
     if (!objectPath) {
         return ctx.throw(404);
     }
@@ -67,11 +67,11 @@ router.get('/iiif/image/:image/:region/:size/:rotation/:quality.:format', async 
         uri: objectPath
     };
     let result = await serveImage(item, {
-        region: region,
-        size: size,
-        rotation: rotation,
-        quality: quality,
-        format: format
+        region,
+        size,
+        rotation,
+        quality,
+        format
     });
 
     ctx.body = result.image;

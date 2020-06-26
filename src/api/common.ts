@@ -162,17 +162,20 @@ class Common {
         return path.join(this.getDemoPath(), 'data');
     }
 
-    static decodeDataPath(input: string): string | false {
+    static decodeDataPath(input?: string): string | false {
         return this.decodePath(this.getDemoDataPath(), input);
     }
 
-    static decodeCachePath(input: string): string | false {
+    static decodeCachePath(input?: string): string | false {
         return this.decodePath(this.getCachePath(), input);
     }
 
-    static decodePath(root: string, input: string): string | false {
+    static decodePath(root: string, input?: string): string | false {
 
         let output = root;
+        if (!input) {
+            input = '';
+        }
 
         const tmpArray =  input.replace(/__/g, ' ').split('--');
         for (let dirName of tmpArray) {

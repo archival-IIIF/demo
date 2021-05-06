@@ -111,6 +111,8 @@ router.get('/iiif/manifest/:id', ctx => {
             }],
             rendering,
         }];
+
+        output = common.addTranscript(output, objectPath, ctx);
     }
 
 

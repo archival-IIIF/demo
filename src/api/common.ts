@@ -19,7 +19,7 @@ class Common {
                 type: 'dctypes:Sound',
                 format: 'audio/mpeg',
                 thumbnail: {
-                    'id': getBaseUrl(ctx) + '/file-icon/mp3.svg',
+                    id: getBaseUrl(ctx) + '/file-icon/mp3.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -30,7 +30,7 @@ class Common {
                 type: 'dctypes:Sound',
                 format: 'audio/mpeg',
                 thumbnail: {
-                    'id': getBaseUrl(ctx)  + '/file-icon/ogg.svg',
+                    id: getBaseUrl(ctx)  + '/file-icon/ogg.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -42,7 +42,7 @@ class Common {
                 type: 'Image',
                 format: 'image/jpeg',
                 thumbnail: {
-                    'id': this.getIIIFThumbnail(relativePath, ctx),
+                    id: this.getIIIFThumbnail(relativePath, ctx),
                     format: 'image/jpeg'
                 }
             };
@@ -54,7 +54,7 @@ class Common {
                 type: 'Image',
                 format: 'image/png',
                 thumbnail: {
-                    'id': this.getIIIFThumbnail(relativePath, ctx),
+                    id: this.getIIIFThumbnail(relativePath, ctx),
                     format: 'image/png'
                 }
             };
@@ -65,7 +65,7 @@ class Common {
                 type: 'dctypes:Document',
                 format: 'video/mp4',
                 thumbnail: {
-                    'id': getBaseUrl(ctx) + '/file-icon/mp4.svg',
+                    id: getBaseUrl(ctx) + '/file-icon/mp4.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -76,7 +76,7 @@ class Common {
                 type: 'dctypes:Document',
                 format: 'video/ogg',
                 thumbnail: {
-                    'id': getBaseUrl(ctx) + '/file-icon/ogv.svg',
+                    id: getBaseUrl(ctx) + '/file-icon/ogv.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -87,7 +87,7 @@ class Common {
                 type: 'dctypes:Document',
                 format: 'video/webm',
                 thumbnail: {
-                    'id': getBaseUrl(ctx) + '/file-icon/webm.svg',
+                    id: getBaseUrl(ctx) + '/file-icon/webm.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -98,7 +98,7 @@ class Common {
                 type: 'foaf:Document',
                 format: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                 thumbnail: {
-                    'id': getBaseUrl(ctx) + '/file-icon/docx.svg',
+                    id: getBaseUrl(ctx) + '/file-icon/docx.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -109,7 +109,7 @@ class Common {
                 type: 'foaf:Document',
                 format: 'application/pdf',
                 thumbnail: {
-                    'id': getBaseUrl(ctx) + '/file-icon/pdf.svg',
+                    id: getBaseUrl(ctx) + '/file-icon/pdf.svg',
                     format: 'image/svg+xml'
                 }
             };
@@ -219,6 +219,53 @@ class Common {
             output = Object.assign(output, additionalMetadata);
         }
 
+
+        return output;
+    }
+
+    static addTranscript(output: any, objectPath: string, ctx: Router.RouterContext) {
+
+        if (!output.items || !output.items[0]) {
+            return output;
+        }
+
+        let vttPath =  objectPath + '.vtt';
+
+        if (!fs.existsSync(vttPath)) {
+            return output;
+        }
+
+        const data = fs.readFileSync(vttPath, {encoding:'utf8', flag:'r'});
+        let i = 0;
+        const items: any = [];
+        for(const e of data.split("\r\n\r\n")) {
+            if (e.trim() === 'WEBVTT') {
+                continue;
+            }
+            const lines = e.split("\r\n");
+            const t = parseInt(lines[1].substr(0, 2)) * 3600 +
+                parseInt(lines[1].substr(3, 2)) * 60 +
+                parseInt(lines[1].substr(6, 2));
+            items.push({
+                id:	this.getUriByObjectPath(objectPath, ctx, 'manifest') + '/Annotation/' + (i++).toString(),
+                motivation:	"supplementing",
+                type: "Annotation",
+                body: {
+                    language: "en",
+                    type:	"TextualBody",
+                    value:	lines[2]
+                },
+                target:	this.getUriByObjectPath(objectPath, ctx, 'manifest') +  "/canvas/arthur.mp4#t=" + t.toString()
+            });
+        }
+
+        output.items[0].annotations = [
+            {
+                id: this.getUriByObjectPath(objectPath, ctx, 'manifest') +  '/AnnotationPage',
+                type: "AnnotationPage",
+                items
+            }
+        ];
 
         return output;
     }

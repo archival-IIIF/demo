@@ -51,6 +51,14 @@ router.get('/iiif/collection/:id', ctx => {
                 return;
             }
 
+            if (name.endsWith('.vtt')) {
+                return;
+            }
+
+            if (name.startsWith('.')) {
+                return;
+            }
+
             if (name.startsWith('@@')) {
                 return;
             }

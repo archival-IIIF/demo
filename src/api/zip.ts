@@ -28,7 +28,7 @@ router.get('/zip/:id', async ctx => {
     archive.directory(source, '/');
     await (new Promise((resolve, reject) => {
         archive.finalize().then(() => {
-            resolve();
+            resolve('done');
         })
     }));
 

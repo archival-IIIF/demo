@@ -1,5 +1,5 @@
 import * as Sharp from 'sharp';
-import {AvailableFormatInfo, OutputOptions} from "sharp";
+import {AvailableFormatInfo, FormatEnum, OutputOptions} from "sharp";
 import {JpegOptions} from "sharp";
 import {PngOptions} from "sharp";
 import {WebpOptions} from "sharp";
@@ -15,7 +15,7 @@ interface IAllOutputOptions {
 class FormatRequest {
 
     private request: string;
-    private format: string;
+    private format: keyof FormatEnum;
     private outputOptions: OutputOptions | JpegOptions | PngOptions | WebpOptions | TiffOptions;
     public allOutputOptions: IAllOutputOptions = {
         jpg: {
@@ -29,7 +29,7 @@ class FormatRequest {
         webp: {
             quality: 80
         },
-        tif: {
+        tiff: {
             quality: 80
         }
     };
@@ -46,7 +46,7 @@ class FormatRequest {
                 break;
             case 'png':
             case 'webp':
-            case 'tif':
+            case 'tiff':
                 this.format = this.request;
                 this.outputOptions = this.allOutputOptions[this.request];
                 break;

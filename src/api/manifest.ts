@@ -5,6 +5,7 @@ import common from './common';
 import {imageSize} from "image-size";
 import getBaseUrl from '../lib/BaseUrl';
 import * as mime from 'mime-types';
+import removeDiacritics from "./Diacritics";
 
 const router: Router = new Router();
 
@@ -49,6 +50,7 @@ router.get('/iiif/manifest/:id', ctx => {
                 output.items.push(getImageItem(pagesDir + '/' + page, ctx))
             });
         }
+        output = common.addSearch(output, objectPath, ctx);
 
     } else {
 
@@ -94,6 +96,112 @@ router.get('/iiif/manifest/:id', ctx => {
 
     ctx.body = output;
 
+});
+
+router.get('/iiif/autocomplete/:id', ctx => {
+
+    const objectPath = common.decodeDataPath(ctx.params.id)
+    if (!objectPath) {
+        return ctx.throw(404);
+    }
+
+    const searchFile = objectPath + '.iiif/search.json';
+    if (!fs.existsSync(searchFile)) {
+        return ctx.throw(404);
+    }
+
+    let searchData: {chars: string}[][] = JSON.parse(fs.readFileSync(searchFile, 'utf8'));
+
+    const terms = [];
+    let q = ctx.query.q ?? '';
+    if (q !== '') {
+        const qq = removeDiacritics(q);
+        for (const p of searchData) {
+            for (const w of p) {
+                if(removeDiacritics(w.chars).includes(qq)) {
+                    terms.push({
+                        match: w.chars,
+                        url: common.getUriByObjectPath(objectPath, ctx, 'search') + "?q=" + w.chars +
+                            "&motivation=painting",
+                        count: 1
+                    });
+                }
+            }
+        }
+    }
+
+
+    ctx.body = {
+        "@context": "http://iiif.io/api/search/1/context.json",
+        "@id": common.getUriByObjectPath(objectPath, ctx, 'autocomplete') + "?q=" + q + "&motivation=painting",
+        "@type":"search:TermList",
+        ignored: ["user"],
+        terms
+    }
+});
+
+
+router.get('/iiif/search/:id', ctx => {
+
+    const objectPath = common.decodeDataPath(ctx.params.id)
+    if (!objectPath) {
+        return ctx.throw(404);
+    }
+
+    const searchFile = objectPath + '.iiif/search.json';
+    if (!fs.existsSync(searchFile)) {
+        return ctx.throw(404);
+    }
+
+    let searchData: {chars: string, on?: string}[][] = JSON.parse(fs.readFileSync(searchFile, 'utf8'));
+
+    const hits = [];
+    const resources = [];
+    let q = ctx.query.q ?? '';
+    if (q !== '') {
+        let a = 0;
+        const qq = removeDiacritics(q);
+        for (const p of searchData) {
+            let i = 0;
+            for (const w of p) {
+                if (removeDiacritics(w.chars).includes(qq)) {
+                    let on = w.on ?? '';
+                    on = on.startsWith('xywh') ? ctx.params.id + '#' + on : on;
+                    on = getBaseUrl(ctx) + '/iiif/canvas/' + on;
+                    const annotationId = common.getUriByObjectPath(objectPath, ctx, 'annotation') + '/' + a++;
+                    resources.push({
+                        "@type": "oa:Annotation",
+                        "@id": annotationId,
+                        motivation:	"sc:painting",
+                        resource: {
+                            "@type": "cnt:ContentAsText",
+                            chars: w.chars
+                        },
+                        on
+                    });
+
+                    const before = p.slice(0, i).map((w => w.chars)).join(' ');
+                    const after = p.slice(i+1, p.length).map((w => w.chars)).join(' ');
+                    hits.push({
+                        "@type": "search:Hit",
+                        before,
+                        after,
+                        annotations: [annotationId]
+                    });
+                }
+                i++;
+            }
+        }
+    }
+
+
+    ctx.body = {
+        "@context": "http://iiif.io/api/search/1/context.json",
+        "@id": common.getUriByObjectPath(objectPath, ctx, 'search') + "?q=" + q + "&motivation=painting",
+        profile: "http://iiif.io/api/search/1/search",
+        resources,
+        hits
+    }
 });
 
 function getImageItem(objectPath: string, ctx: Router.RouterContext) {

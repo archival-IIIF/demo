@@ -1,0 +1,48 @@
+[
+  [
+    {
+      "chars":  "Ik",
+      "on": "xywh=40,90,128,120"
+    },
+    {
+      "chars":  "probeer",
+      "on": "xywh=190,95,490,138"
+    },
+    {
+      "chars":  "alles",
+      "on": "xywh=40,222,300,118"
+    }
+  ],
+  [
+    {
+      "chars": "Uit",
+      "on": "xywh=40,428,95,70"
+    },
+    {
+      "chars": "in",
+      "on": "xywh=140,428,60,70"
+    },
+    {
+      "chars": "Amsterdam",
+      "on": "xywh=200,428,330,70"
+    },
+    {
+      "chars": "ontdek",
+      "on": "xywh=40,488,208,70"
+    },
+    {
+      "chars":  "het",
+      "on": "xywh=250,488,100,70"
+    },
+    {
+      "chars":  "allemaal",
+      "on": "xywh=350,488,255,70"
+    }
+  ],
+  [
+    {
+      "chars":  "iamamsterdam.nl/uit",
+      "on": "Images--I_Amsterdam_Google_banner_2019.jpg.iiif--pages--I_Amsterdam_Google_banner_2019_2.jpg#xywh=48,38,432,56"
+    }
+  ]
+]

@@ -223,6 +223,32 @@ class Common {
         return output;
     }
 
+    static addSearch(output: any, objectPath: string, ctx: Router.RouterContext) {
+        const searchFile = objectPath + '.iiif/search.json';
+        if (!fs.existsSync(searchFile)) {
+            return output;
+        }
+
+        if (!output.service) {
+            output.service = [];
+        }
+
+
+        output.service.push({
+            "@context":	"http://iiif.io/api/search/1/context.json",
+            id:	this.getUriByObjectPath(objectPath, ctx, 'search'),
+            type: "SearchService1",
+            profile: "http://iiif.io/api/search/1/search",
+            service: [{
+                id:	this.getUriByObjectPath(objectPath, ctx, 'autocomplete'),
+                profile: "http://iiif.io/api/search/1/autocomplete",
+                type: "AutoCompleteService1"
+            }]
+        });
+
+        return output;
+    }
+
     static addTranscript(output: any, objectPath: string, ctx: Router.RouterContext) {
 
         if (!output.items || !output.items[0]) {

@@ -33,7 +33,12 @@ router.get('/iiif/collection/:id', ctx => {
 
         const subObjectPath = path.join(objectPath, name);
 
+        if (name.startsWith('.') || name === 'manifest.json' || name.endsWith('.iiif')) {
+            return;
+        }
+
         if (fs.lstatSync(subObjectPath).isDirectory()) {
+
             if (!output.hasOwnProperty('items')) {
                 output.items = [];
             }
@@ -47,22 +52,6 @@ router.get('/iiif/collection/:id', ctx => {
             );
 
         } else {
-            if (name.endsWith('manifest.json')) {
-                return;
-            }
-
-            if (name.endsWith('.vtt')) {
-                return;
-            }
-
-            if (name.startsWith('.')) {
-                return;
-            }
-
-            if (name.startsWith('@@')) {
-                return;
-            }
-
             if (!output.hasOwnProperty('items')) {
                 output.items = [];
             }

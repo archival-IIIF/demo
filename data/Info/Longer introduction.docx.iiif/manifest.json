@@ -1,0 +1,19 @@
+{
+  "license": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "attribution": "<a href=\"https://en.wikipedia.org\">Provided by Wikipedia</a>",
+  "logo": "https://en.wikipedia.org/static/images/project-logos/enwiki.png",
+  "rendering": [
+    {
+      "id": "/file/Info--Longer introduction.docx.iiif--Longer introduction.pdf",
+      "label": {"none": ["Longer introduction.pdf (Access copy)"]},
+      "type": "Text",
+      "format": "application/pdf"
+    },
+    {
+      "id": "/file/Info--Longer introduction.docx",
+      "label": {"none": ["Longer introduction.docx (Original master)"]},
+      "type": "Text",
+      "format": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    }
+  ]
+}

@@ -211,7 +211,7 @@ class Common {
         if (fs.lstatSync(objectPath).isDirectory()) {
             metadataPath =  objectPath + '/manifest.json';
         } else {
-            metadataPath =  objectPath + '.manifest.json';
+            metadataPath =  objectPath + '.iiif/manifest.json';
         }
 
         if (fs.existsSync(metadataPath)) {
@@ -229,7 +229,7 @@ class Common {
             return output;
         }
 
-        let vttPath =  objectPath + '.vtt';
+        let vttPath =  objectPath + '.iiif/transcript.vtt';
 
         if (!fs.existsSync(vttPath)) {
             return output;

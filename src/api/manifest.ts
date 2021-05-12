@@ -40,40 +40,16 @@ router.get('/iiif/manifest/:id', ctx => {
     output = common.addMetadata(output, objectPath);
 
     if (mediaTypeAndFormat.type === 'Image') {
-        const dimensions = imageSize(objectPath);
-        const imageWith = dimensions.width;
-        const imageHeight = dimensions.height;
-        output.items = [{
-            id: common.getUriByObjectPath(objectPath, ctx, 'canvas'),
-            type: 'Canvas',
-            width: imageWith,
-            height: imageHeight,
-            items: [{
-                id: common.getUriByObjectPath(objectPath, ctx, 'annotationPage'),
-                type: 'AnnotationPage',
-                items: [{
-                    id: common.getUriByObjectPath(objectPath, ctx, 'annotation'),
-                    type: 'Annotation',
-                    motivation: 'painting',
-                    body: {
-                        id: common.getIIIFThumbnail(objectPath, ctx, ),
-                        type: 'Image',
-                        format: 'image/jpeg',
-                        width: imageWith,
-                        height: imageHeight,
-                        service: {
-                            id: common.getUriByObjectPath(objectPath, ctx, 'image'),
-                            type: 'ImageService3',
-                            width: imageWith,
-                            height: imageHeight,
-                            sizes: [],
-                            profile: 'level2'
-                        }
-                    },
-                    target: common.getUriByObjectPath(objectPath, ctx, 'canvas')
-                }]
-            }]
-        }]
+
+        output.items = [getImageItem(objectPath, ctx)];
+        const pagesDir = objectPath + '.iiif/pages';
+        if (fs.existsSync(pagesDir)) {
+            const pages = fs.readdirSync(pagesDir);
+            pages.forEach(function (page) {
+                output.items.push(getImageItem(pagesDir + '/' + page, ctx))
+            });
+        }
+
     } else {
 
         let rendering = [{
@@ -119,5 +95,46 @@ router.get('/iiif/manifest/:id', ctx => {
     ctx.body = output;
 
 });
+
+function getImageItem(objectPath: string, ctx: Router.RouterContext) {
+    const dimensions = imageSize(objectPath);
+    const imageWith = dimensions.width;
+    const imageHeight = dimensions.height;
+    const sizes: any = [];
+
+    return {
+        id: common.getUriByObjectPath(objectPath, ctx, 'canvas'),
+        type: 'Canvas',
+        width: imageWith,
+        height: imageHeight,
+        items: [
+            {
+                id: common.getUriByObjectPath(objectPath, ctx, 'annotationPage'),
+                type: 'AnnotationPage',
+                items: [{
+                    id: common.getUriByObjectPath(objectPath, ctx, 'annotation'),
+                    type: 'Annotation',
+                    motivation: 'painting',
+                    body: {
+                        id: common.getIIIFThumbnail(objectPath, ctx,),
+                        type: 'Image',
+                        format: 'image/jpeg',
+                        width: imageWith,
+                        height: imageHeight,
+                        service: {
+                            id: common.getUriByObjectPath(objectPath, ctx, 'image'),
+                            type: 'ImageService3',
+                            sizes,
+                            width: imageWith,
+                            height: imageHeight,
+                            profile: 'level2'
+                        }
+                    },
+                    target: common.getUriByObjectPath(objectPath, ctx, 'canvas')
+                }]
+            }
+        ]
+    }
+}
 
 export default router.routes();

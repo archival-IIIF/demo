@@ -8,6 +8,7 @@ import download from "../lib/Download";
 const router: Router = new Router();
 
 router.get('/zip/:id', async ctx => {
+
     const id = ctx.params.id;
     const dest = Common.getCachePath() + '/' + id + '.zip';
 
@@ -17,7 +18,7 @@ router.get('/zip/:id', async ctx => {
 
     let source: string | false = Common.getDemoDataPath();
     if (id !== 'demo') {
-        source = common.decodeCachePath(ctx.params.id);
+        source = common.decodeDataPath(ctx.params.id);
         if (!source) {
             return ctx.throw(404);
         }

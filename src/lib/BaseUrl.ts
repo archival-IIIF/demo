@@ -5,7 +5,7 @@ function getBaseUrl(ctx: Router.RouterContext): string {
 
         let protocol = 'http';
         if (ctx.headers['x-forwarded-proto']) {
-            protocol = ctx.headers['x-forwarded-proto'];
+            protocol = ctx.headers['x-forwarded-proto'].toString();
         }
 
         return protocol + '://' + ctx.headers['x-forwarded-host'];

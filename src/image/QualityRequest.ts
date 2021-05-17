@@ -1,4 +1,4 @@
-const {RequestError} = require('./errors');
+const {MyRequestError} = require('./errors');
 import * as Sharp from 'sharp';
 
 class QualityRequest {
@@ -22,7 +22,7 @@ class QualityRequest {
                 this.setQuality = true;
                 break;
             default:
-                throw new RequestError(`Incorrect quality request: ${this.request}`);
+                throw new MyRequestError(`Incorrect quality request: ${this.request}`);
         }
     }
 

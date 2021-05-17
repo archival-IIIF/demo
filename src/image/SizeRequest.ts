@@ -1,6 +1,6 @@
 import {IProcessingInfo} from "./IProcessingInfo";
 
-const {RequestError} = require('./errors');
+const {MyRequestError} = require('./errors');
 import * as Sharp from 'sharp';
 
 interface ISize {
@@ -57,10 +57,10 @@ class SizeRequest {
                 this.bestFit = true;
             }
             else
-                throw new RequestError(`Incorrect region request: ${this.request}`);
+                throw new MyRequestError(`Incorrect region request: ${this.request}`);
 
             if ((this.newSize.width === 0) || (this.newSize.height === 0))
-                throw new RequestError('Size width and/or height should not be zero');
+                throw new MyRequestError('Size width and/or height should not be zero');
 
             this.updateProcessingInfo(processingInfo);
         }

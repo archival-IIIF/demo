@@ -1,19 +1,19 @@
-class RequestError extends Error {
+class MyRequestError extends Error {
     constructor(...params: any) {
         super(params);
 
         if (Error.captureStackTrace)
-            Error.captureStackTrace(this, RequestError);
+            Error.captureStackTrace(this, MyRequestError);
     }
 }
 
-class NotImplementedError extends Error {
+class MyNotImplementedError extends Error {
     constructor(...params: any) {
         super(params);
 
         if (Error.captureStackTrace)
-            Error.captureStackTrace(this, NotImplementedError);
+            Error.captureStackTrace(this, MyNotImplementedError);
     }
 }
 
-module.exports = {RequestError, NotImplementedError};
+module.exports = {MyRequestError, MyNotImplementedError};

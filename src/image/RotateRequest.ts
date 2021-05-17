@@ -1,6 +1,6 @@
 import * as Sharp from 'sharp';
 
-const {RequestError} = require('./errors');
+const {MyRequestError} = require('./errors');
 
 class RotateRequest {
 
@@ -23,11 +23,11 @@ class RotateRequest {
 
         this.degrees = parseFloat(request);
         if (isNaN(this.degrees))
-            throw new RequestError(`Incorrect rotation request: ${this.request}`);
+            throw new MyRequestError(`Incorrect rotation request: ${this.request}`);
 
         this.degrees = Math.round(this.degrees);
         if ((this.degrees < 0) || (this.degrees >= 360))
-            throw new RequestError('Degrees should be between 0 and 360');
+            throw new MyRequestError('Degrees should be between 0 and 360');
 
         this.degrees = Math.floor(this.degrees / 90) * 90;
     }

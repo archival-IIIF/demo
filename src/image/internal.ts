@@ -7,7 +7,7 @@ import SizeRequest from './SizeRequest';
 import RotateRequest from './RotateRequest';
 import QualityRequest from './QualityRequest';
 import FormatRequest from './FormatRequest';
-const {RequestError, NotImplementedError} = require('./errors');
+const {MyRequestError, MyNotImplementedError} = require('./errors');
 
 interface IResult {
     image: null | Buffer;
@@ -48,9 +48,9 @@ async function serveImage(item: any, {region, size, rotation, quality, format}: 
         result.contentType = getContentType(format);
     }
     catch (err) {
-        if (err instanceof RequestError)
+        if (err instanceof MyRequestError)
             result.status = 400;
-        else if (err instanceof NotImplementedError)
+        else if (err instanceof MyNotImplementedError)
             result.status = 501;
         else
             throw err;

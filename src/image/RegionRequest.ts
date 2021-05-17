@@ -1,6 +1,6 @@
 import {IProcessingInfo} from "./IProcessingInfo";
 
-const {RequestError} = require('./errors');
+const {MyRequestError} = require('./errors');
 import * as Sharp from 'sharp';
 
 
@@ -59,7 +59,7 @@ class RegionRequest {
             [, , this.top, , this.height] = result.map(i => Math.round((imageSize.height / 100) * parseFloat(i)));
         }
         else
-            throw new RequestError(`Incorrect region request: ${this.request}`);
+            throw new MyRequestError(`Incorrect region request: ${this.request}`);
 
         if (this.left < 0) this.left = 0;
         if (this.top < 0) this.top = 0;
@@ -68,10 +68,10 @@ class RegionRequest {
         if ((this.height + this.top) > imageSize.height) this.height = imageSize.height - this.top;
 
         if ((this.width === 0) || (this.height === 0))
-            throw new RequestError('Region width and/or height should not be zero');
+            throw new MyRequestError('Region width and/or height should not be zero');
 
         if ((this.left > imageSize.width) || (this.top > imageSize.height))
-            throw new RequestError('Region is entirely outside the bounds');
+            throw new MyRequestError('Region is entirely outside the bounds');
 
         const isUpperLeftCorner = ((this.left === 0) && (this.top === 0));
         const isFullWidthAndHeight = ((this.width === imageSize.width) && (this.height === imageSize.height));

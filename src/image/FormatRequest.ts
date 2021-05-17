@@ -1,11 +1,11 @@
 import * as Sharp from 'sharp';
-import {AvailableFormatInfo, FormatEnum, OutputOptions} from "sharp";
+import {FormatEnum, OutputOptions} from "sharp";
 import {JpegOptions} from "sharp";
 import {PngOptions} from "sharp";
 import {WebpOptions} from "sharp";
 import {TiffOptions} from "sharp";
 
-const {NotImplementedError, RequestError} = require('./errors');
+const {MyNotImplementedError, MyRequestError} = require('./errors');
 
 
 interface IAllOutputOptions {
@@ -53,9 +53,9 @@ class FormatRequest {
             case 'gif':
             case 'jp2':
             case 'pdf':
-                throw new NotImplementedError(`Format ${this.request} not supported`);
+                throw new MyNotImplementedError(`Format ${this.request} not supported`);
             default:
-                throw new RequestError(`Incorrect format request: ${this.request}`);
+                throw new MyRequestError(`Incorrect format request: ${this.request}`);
         }
     }
 

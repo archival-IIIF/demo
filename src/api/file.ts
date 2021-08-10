@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import download from '../lib/Download';
 import common from './common';
-import serveImage from '../image/internal';
+import {serveImage} from "@archival-iiif/image-server-core";
 import {imageSize} from 'image-size';
 import getBaseUrl from '../lib/BaseUrl';
 
@@ -63,10 +63,7 @@ router.get('/iiif/image/:image/:region/:size/:rotation/:quality.:format', async 
     if (!objectPath) {
         return ctx.throw(404);
     }
-    const item = {
-        uri: objectPath
-    };
-    let result = await serveImage(item, {
+    let result = await serveImage(objectPath, null, {
         region,
         size,
         rotation,
@@ -75,7 +72,7 @@ router.get('/iiif/image/:image/:region/:size/:rotation/:quality.:format', async 
     });
 
     ctx.body = result.image;
-    ctx.status = result.status;
+    //ctx.status = result.status;
     ctx.set('Content-Type', result.contentType);
     ctx.set('Content-Length', result.contentLength.toString());
 

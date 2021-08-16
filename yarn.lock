@@ -10,6 +10,11 @@
     "@types/sharp" "0.28.5"
     sharp "0.28.3"
 
+"@archival-iiif/viewer@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@archival-iiif/viewer/-/viewer-1.0.1.tgz#b5d18599fe2dad9665311f2e8e1c3d53d917edf5"
+  integrity sha512-Ty2sE7vOh98DbdcDtqVAQ4/jszhaAuzu6t88jk0tN5pAaycBwE1vXmAN6k3MFanGvgn3CH4IK4qk3BmTalmOZg==
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"

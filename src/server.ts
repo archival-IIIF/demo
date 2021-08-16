@@ -27,6 +27,10 @@ app.use(homepage);
 app.use(api);
 app.use(serve({rootDir: fileIconsPath, rootPath: '/file-icon'}));
 app.use(serve({rootDir: path.join(__dirname, './../viewer/'), rootPath: '/static'}));
+app.use(serve({
+    rootDir: path.join(__dirname, './../node_modules/@archival-iiif/viewer/dist'),
+    rootPath: '/archival-iiif'
+}));
 
 
 app.keys = ['secret'];

@@ -1,7 +1,7 @@
-import * as Router from 'koa-router';
+import  Router from 'koa-router';
 import Pronoms from './pronoms';
-import * as fs from 'fs';
-import * as path from 'path';
+import  fs from 'fs';
+import  path from 'path';
 import getBaseUrl from '../lib/BaseUrl';
 import {throws} from "assert";
 

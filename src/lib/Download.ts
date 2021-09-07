@@ -1,7 +1,7 @@
-import * as Router from 'koa-router';
-import * as path from 'path';
-import * as mime from 'mime-types';
-import * as fs from 'fs';
+import  Router from 'koa-router';
+import  path from 'path';
+import  mime from 'mime-types';
+import  fs from 'fs';
 import {promisify} from 'util';
 const readFileAsync = promisify(fs.readFile);
 import HttpError from '../lib/HttpError';

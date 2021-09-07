@@ -7,7 +7,8 @@
     "sourceMap": true,
     "plugins": [
       { "name": "typescript-tslint-plugin" }
-    ]
+    ],
+    "esModuleInterop": true
   },
   "include": [
     "./src/**/*"

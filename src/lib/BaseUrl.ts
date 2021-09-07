@@ -1,4 +1,4 @@
-import * as Router from 'koa-router';
+import  Router from 'koa-router';
 
 function getBaseUrl(ctx: Router.RouterContext): string {
     if (ctx.headers['x-forwarded-host']) {

@@ -1,8 +1,8 @@
-import * as Router from 'koa-router';
-import * as fs from 'fs';
+import Router from 'koa-router';
+import fs from 'fs';
 import common from './common';
 import Common from "./common";
-import * as archiver from 'archiver';
+import archiver from 'archiver';
 import download from "../lib/Download";
 
 const router: Router = new Router();

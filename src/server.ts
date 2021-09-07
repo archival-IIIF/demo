@@ -1,6 +1,6 @@
-import * as Koa from 'koa';
+import Koa from 'koa';
 import homepage from './homepage/homepage';
-import * as path from "path";
+import path from "path";
 import api from './api/routes';
 const serve = require('koa-static-server');
 

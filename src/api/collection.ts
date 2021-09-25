@@ -3,6 +3,7 @@ import  fs from 'fs';
 import  path from 'path';
 import common from './common';
 import getBaseUrl from "../lib/BaseUrl";
+import {Collection, Manifest, Resource} from "@archival-iiif/presentation-builder";
 
 const router: Router = new Router();
 
@@ -17,16 +18,17 @@ router.get('/iiif/collection/:id', ctx => {
         ctx.throw(404)
     }
 
-    let output: any = {
-        id: common.getUriByObjectPath(objectPath, ctx, 'collection'),
-        type: 'Collection',
-        label: path.basename(objectPath),
-        '@context': 'http://iiif.io/api/presentation/3/context.json'
-    };
+    let collection = new Collection(
+        common.getUriByObjectPath(objectPath, ctx, 'collection'),
+        path.basename(objectPath)
+    );
+    collection.setContext();
 
     if (!isRoot) {
         const parentPath = path.resolve(objectPath, '..');
-        output.partOf = [{id: common.getUriByObjectPath(parentPath, ctx, 'collection'), type: 'Collection'}];
+        collection.setParent(
+            common.getUriByObjectPath(parentPath, ctx, 'collection')
+        );
     }
 
     fs.readdirSync(objectPath).map((name: string) => {
@@ -39,47 +41,39 @@ router.get('/iiif/collection/:id', ctx => {
 
         if (fs.lstatSync(subObjectPath).isDirectory()) {
 
-            if (!output.hasOwnProperty('items')) {
-                output.items = [];
-            }
-
-            output.items.push(
-                {
-                    id: common.getUriByObjectPath(subObjectPath, ctx, 'collection'),
-                    type: 'Collection',
-                    label: name,
-                }
+            const subCollection = new Collection(
+                common.getUriByObjectPath(subObjectPath, ctx, 'collection'),
+                name
             );
-
+            collection.setItems(subCollection)
         } else {
-            if (!output.hasOwnProperty('items')) {
-                output.items = [];
-            }
-
             const mediaTypeAndFormat = common.getMediaTypeAndFormat(subObjectPath, ctx);
 
-            let manifest = {
-                'id': common.getUriByObjectPath(subObjectPath, ctx, 'manifest'),
-                'type': 'Manifest',
-                label: name,
-                thumbnail: mediaTypeAndFormat.thumbnail,
-            };
+            let manifest = new Manifest(
+                common.getUriByObjectPath(subObjectPath, ctx, 'manifest'),
+                name
+            );
+            manifest.setThumbnail(new Resource(
+                mediaTypeAndFormat.thumbnail.id,
+                'image',
+                undefined,
+                mediaTypeAndFormat.thumbnail.format,
+            ));
 
             manifest = common.addMetadata(manifest, subObjectPath);
-
-            output.items.push(manifest);
+            collection.setItems(manifest);
         }
     });
 
-    output = common.addMetadata(output, objectPath);
-
-    output.rendering = {
+    collection.setRendering({
         id: getBaseUrl(ctx) + '/zip/' + ctx.params.id,
         label: {en: ['Download folder'], de: ['Ordner herunterladen']},
         format: 'application/zip'
-    }
+    });
 
-    ctx.body = output;
+    collection = common.addMetadata(collection, objectPath);
+
+    ctx.body = collection;
 
 });
 

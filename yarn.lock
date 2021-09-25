@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@archival-iiif/image-server-core@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@archival-iiif/image-server-core/-/image-server-core-1.0.6.tgz#aa9501b24e17ce7b4cf274969da4311efe114d06"
-  integrity sha512-sRzr04lQvsaY0N33yQ+qsrBUDWO2q7Yej58ya6QP7zJWFwNc37r9vFG7tozT0tQNi5X7V68nV3JLgAI3lWbe3w==
+"@archival-iiif/image-server-core@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@archival-iiif/image-server-core/-/image-server-core-1.0.7.tgz#2bf5cce1a72c304c1952b1c40f2c8185aaf2211e"
+  integrity sha512-MeIfGNxQ6E9IU+Y/620sPt+pJ2C6OTtZvurINrrb7S+wf0/1SXiatmoFrALuJXXYccCRCI6rvddLiNQWodvssw==
   dependencies:
     "@types/sharp" "0.28.5"
     sharp "0.28.3"

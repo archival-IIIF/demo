@@ -4,7 +4,6 @@ import  path from 'path';
 import common from './common';
 import {imageSize} from "image-size";
 import getBaseUrl from '../lib/BaseUrl';
-import  mime from 'mime-types';
 import removeDiacritics from "./Diacritics";
 
 const router: Router = new Router();

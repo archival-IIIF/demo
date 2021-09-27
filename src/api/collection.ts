@@ -53,12 +53,14 @@ router.get('/iiif/collection/:id', ctx => {
                 common.getUriByObjectPath(subObjectPath, ctx, 'manifest'),
                 name
             );
-            manifest.setThumbnail(new Resource(
-                mediaTypeAndFormat.thumbnail.id,
-                'image',
-                undefined,
-                mediaTypeAndFormat.thumbnail.format,
-            ));
+            if (mediaTypeAndFormat.thumbnail) {
+                manifest.setThumbnail(new Resource(
+                    mediaTypeAndFormat.thumbnail.id,
+                    'image',
+                    undefined,
+                    mediaTypeAndFormat.thumbnail.format,
+                ));
+            }
 
             manifest = common.addMetadata(manifest, subObjectPath);
             collection.setItems(manifest);

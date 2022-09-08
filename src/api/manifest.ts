@@ -112,7 +112,7 @@ router.get('/iiif/autocomplete/:id', ctx => {
     let searchData: {chars: string}[][] = JSON.parse(fs.readFileSync(searchFile, 'utf8'));
 
     const terms = [];
-    let q = ctx.query.q.toString() ?? '';
+    let q = ctx.query.q?.toString() ?? '';
     if (q !== '') {
         const qq = removeDiacritics(q);
         for (const p of searchData) {
@@ -156,7 +156,7 @@ router.get('/iiif/search/:id', ctx => {
 
     const hits = [];
     const resources = [];
-    let q = ctx.query.q.toString() ?? '';
+    let q = ctx.query.q?.toString() ?? '';
     if (q !== '') {
         let a = 0;
         const qq = removeDiacritics(q);

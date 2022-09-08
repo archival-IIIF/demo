@@ -10,10 +10,10 @@
     "@types/sharp" "0.30.5"
     sharp "0.30.7"
 
-"@archival-iiif/presentation-builder@1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@archival-iiif/presentation-builder/-/presentation-builder-1.4.2.tgz#5ea2a6b7dfdd8330a4ea2b4b45dbf7846344ca0d"
-  integrity sha512-gBCqq6N8FdH1CvqfwjBOEfdQzwONXWGcs+EyXuMrxAvXlx5O0C6xtFoU9tsq86oF3yhH2W1JD9B0iYgMB9h7gQ==
+"@archival-iiif/presentation-builder@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@archival-iiif/presentation-builder/-/presentation-builder-1.5.0.tgz#eabf4aa5996d98bcce2a493c5fc28fb65ab71a83"
+  integrity sha512-FTU5PJM6XjHGmWbB4vdUrt3nze2jUC979ZX5IXunGZstwJKAjc698MAh5LwfVm60OBeN31vY8QfRWu+WVskx3w==
 
 "@archival-iiif/viewer@^2.0.0":
   version "2.0.0"

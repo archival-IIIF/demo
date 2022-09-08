@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@archival-iiif/presentation-builder": "1.4.2",
+    "@archival-iiif/presentation-builder": "^1.5.0",
     "@archival-iiif/image-server-core": "^2.0.5",
     "@archival-iiif/viewer": "^2.0.0",
     "archiver": "^5.3.1",

@@ -1,11 +1,11 @@
 {
   "dependencies": {
-    "@archival-iiif/presentation-builder": "^1.5.0",
+    "@archival-iiif/presentation-builder": "^1.5.1",
     "@archival-iiif/image-server-core": "^2.0.5",
     "@archival-iiif/viewer": "^2.0.0",
     "archiver": "^5.3.1",
     "dotenv": "^16.0.1",
-    "file-icon-vectors": "^1.0.0",
+    "file-icon-vectors": "github:dmhendricks/file-icon-vectors",
     "filesize": "^9.0.11",
     "image-size": "^1.0.2",
     "koa": "^2.13.4",

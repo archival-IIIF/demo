@@ -10,10 +10,10 @@
     "@types/sharp" "0.30.5"
     sharp "0.30.7"
 
-"@archival-iiif/presentation-builder@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@archival-iiif/presentation-builder/-/presentation-builder-1.5.0.tgz#eabf4aa5996d98bcce2a493c5fc28fb65ab71a83"
-  integrity sha512-FTU5PJM6XjHGmWbB4vdUrt3nze2jUC979ZX5IXunGZstwJKAjc698MAh5LwfVm60OBeN31vY8QfRWu+WVskx3w==
+"@archival-iiif/presentation-builder@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@archival-iiif/presentation-builder/-/presentation-builder-1.5.1.tgz#f5eda949dcc3b009245b58f45e6220ae0c1dbeb4"
+  integrity sha512-iSAVgUwae0H08jYGizR14+lKS/TaRPbghKEl3hF2FHfvn7ABdhCczX3X0dAx1xAMbqLmtW8m+1qwvOLT8iO6zg==
 
 "@archival-iiif/viewer@^2.0.0":
   version "2.0.0"
@@ -615,10 +615,9 @@ expand-template@^2.0.3:
   resolved "https://registry.yarnpkg.com/expand-template/-/expand-template-2.0.3.tgz#6e14b3fcee0f3a6340ecb57d2e8918692052a47c"
   integrity sha512-XYfuKMvj4O35f/pOXLObndIRvyQ+/+6AhODh+OKWj9S9498pHHn/IMszH+gt0fBCRWMNfk1ZSp5x3AifmnI2vg==
 
-file-icon-vectors@^1.0.0:
+"file-icon-vectors@github:dmhendricks/file-icon-vectors":
   version "1.0.0"
-  resolved "https://registry.yarnpkg.com/file-icon-vectors/-/file-icon-vectors-1.0.0.tgz#eccdc849d8d3a815dd8b653b2e68eacc6f4b07c3"
-  integrity sha512-me+C0t1IU+ggE31CpZNImXID8HV8/eD4eO8go4RwLLZdMaIFr25x23m1xmzYBZH3r/FxyMbbQkD0SNGnRC4meg==
+  resolved "https://codeload.github.com/dmhendricks/file-icon-vectors/tar.gz/9b4b95928f7ff8d73bf45edf34862386e3c48ea5"
 
 filesize@^9.0.11:
   version "9.0.11"

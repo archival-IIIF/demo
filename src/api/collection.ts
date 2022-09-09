@@ -3,7 +3,7 @@ import  fs from 'fs';
 import  path from 'path';
 import common from './common';
 import getBaseUrl from "../lib/BaseUrl";
-import {Collection, Manifest, Resource} from "@archival-iiif/presentation-builder/v3";
+import {Collection, Manifest, Resource} from "@archival-iiif/presentation-builder";
 
 const router: Router = new Router();
 

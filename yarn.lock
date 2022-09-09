@@ -15,10 +15,10 @@
   resolved "https://registry.yarnpkg.com/@archival-iiif/presentation-builder/-/presentation-builder-1.5.1.tgz#f5eda949dcc3b009245b58f45e6220ae0c1dbeb4"
   integrity sha512-iSAVgUwae0H08jYGizR14+lKS/TaRPbghKEl3hF2FHfvn7ABdhCczX3X0dAx1xAMbqLmtW8m+1qwvOLT8iO6zg==
 
-"@archival-iiif/viewer@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@archival-iiif/viewer/-/viewer-2.0.0.tgz#d66db94a83fec985d454ffc131f82f9fede6c714"
-  integrity sha512-wlQTBv+mlILBSstkAP06J0X8W8518QsG6Elo4lCYLj4wIpn61RppV4oXf2VBE3nJ/05z+F049kxLtdj26adTOw==
+"@archival-iiif/viewer@^2.0.6":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@archival-iiif/viewer/-/viewer-2.0.6.tgz#ac7c766c12caedc8b81258bdd457a34311d97729"
+  integrity sha512-0a1fLwTompvj8XQifqqTUkHdYONTiz7Dqnobgo+NsgRMtizVfolASm/rHFGCMWBP6nl5aGH9IgJwRbrVGsisdg==
 
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"

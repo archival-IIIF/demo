@@ -2,7 +2,7 @@
   "dependencies": {
     "@archival-iiif/presentation-builder": "^1.5.1",
     "@archival-iiif/image-server-core": "^2.0.5",
-    "@archival-iiif/viewer": "^2.0.6",
+    "@archival-iiif/viewer": "^3.0.0",
     "archiver": "^5.3.1",
     "dotenv": "^16.0.1",
     "file-icon-vectors": "github:dmhendricks/file-icon-vectors",

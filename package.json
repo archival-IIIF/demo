@@ -3,33 +3,32 @@
     "@archival-iiif/presentation-builder": "^1.5.1",
     "@archival-iiif/image-server-core": "^2.0.5",
     "@archival-iiif/viewer": "^3.0.0",
-    "archiver": "^5.3.1",
-    "dotenv": "^16.0.1",
+    "archiver": "^6.0.1",
+    "dotenv": "^16.4.4",
     "file-icon-vectors": "github:dmhendricks/file-icon-vectors",
-    "filesize": "^9.0.11",
-    "image-size": "^1.0.2",
-    "koa": "^2.13.4",
-    "koa-bodyparser": "^4.3.0",
+    "filesize": "^10.1.0",
+    "image-size": "^1.1.1",
+    "koa": "^2.15.0",
+    "koa-bodyparser": "^4.4.1",
     "koa-route": "^3.2.0",
     "koa-router": "^12.0.0",
     "koa-static-server": "^1.5.2",
     "mime-types": "^2.1.35"
   },
   "devDependencies": {
-    "@types/archiver": "^3.1.1",
-    "@types/koa": "^2.13.5",
-    "@types/koa-router": "^7.4.4",
-    "@types/mime-types": "^2.1.1",
-    "nodemon": "^2.0.19",
-    "ts-node": "^10.9.1",
+    "@types/node": "^20.11.19",
+    "@types/archiver": "^6.0.2",
+    "@types/koa": "^2.14.0",
+    "@types/koa-router": "^7.4.8",
+    "@types/mime-types": "^2.1.4",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.2",
     "copyfiles": "^2.4.1",
     "rimraf": "^4.1.2",
-    "typescript": "^4.8.2"
+    "typescript": "^5.3.3"
   },
   "scripts": {
     "watch": "nodemon --watch \"src/**/*\" -e ts,tsx --exec ts-node ./src/server.ts",
-    "clean": "rimraf dist/",
-    "copy-files": "copyfiles -u 1 \"src/**/*.html\" \"src/**/*.ico\" dist/",
-    "build": "yarn clean && tsc && yarn copy-files"
+    "build": "rimraf dist/ && tsc && copyfiles -u 1 \"src/**/*.html\" \"src/**/*.ico\" dist/"
   }
 }

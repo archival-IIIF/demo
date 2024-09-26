@@ -1,17 +1,28 @@
 {
   "compilerOptions": {
-    "strict": true,
-    "module": "commonjs",
-    "target": "es2017",
-    "noImplicitAny": true,
-    "outDir": "./dist",
-    "sourceMap": true,
-    "plugins": [
-      { "name": "typescript-tslint-plugin" }
+    // See: https://www.npmjs.com/package/@tsconfig/node20
+    "lib": [
+      "es2023",
+      "dom"
     ],
-    "esModuleInterop": true
+    "module": "node16",
+    "target": "es2022",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node16",
+    // custom
+    "sourceMap": true,
+    "outDir": "./dist",
+    // typeorm
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false
   },
   "include": [
-    "./src/**/*"
-  ]
+    "./src/**/*.ts"
+  ],
+  "ts-node": {
+    "swc": true
+  }
 }

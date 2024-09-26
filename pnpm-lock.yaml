@@ -27,8 +27,8 @@ importers:
         specifier: github:dmhendricks/file-icon-vectors
         version: https://codeload.github.com/dmhendricks/file-icon-vectors/tar.gz/9b4b95928f7ff8d73bf45edf34862386e3c48ea5
       filesize:
-        specifier: ^10.1.6
-        version: 10.1.6
+        specifier: 9.0.11
+        version: 9.0.11
       image-size:
         specifier: ^1.1.1
         version: 1.1.1
@@ -624,9 +624,9 @@ packages:
     resolution: {tarball: https://codeload.github.com/dmhendricks/file-icon-vectors/tar.gz/9b4b95928f7ff8d73bf45edf34862386e3c48ea5}
     version: 1.0.0
 
-  filesize@10.1.6:
-    resolution: {integrity: sha512-sJslQKU2uM33qH5nqewAwVB2QgR6w1aMNsYUp3aN5rMRyXEwJGmZvaWzeJFNTOXWlHQyBFCWrdj3fV/fsTOX8w==}
-    engines: {node: '>= 10.4.0'}
+  filesize@9.0.11:
+    resolution: {integrity: sha512-gTAiTtI0STpKa5xesyTA9hA3LX4ga8sm2nWRcffEa1L/5vQwb4mj2MdzMkoHoGv4QzfDshQZuYscQSf8c4TKOA==}
+    engines: {node: '>= 0.4.0'}
 
   foreground-child@3.3.0:
     resolution: {integrity: sha512-Ld2g8rrAyMYFXBhEqMz8ZAHBi4J4uS1i/CxGMDnjyFWddMXLVcDp051DZfu+t7+ab7Wv6SMqpWmyFIj5UbfFvg==}
@@ -1642,7 +1642,7 @@ snapshots:
 
   file-icon-vectors@https://codeload.github.com/dmhendricks/file-icon-vectors/tar.gz/9b4b95928f7ff8d73bf45edf34862386e3c48ea5: {}
 
-  filesize@10.1.6: {}
+  filesize@9.0.11: {}
 
   foreground-child@3.3.0:
     dependencies:

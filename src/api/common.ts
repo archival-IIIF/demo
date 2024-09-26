@@ -3,7 +3,7 @@ import Pronoms from './pronoms';
 import fs from 'fs';
 import path from 'path';
 import getBaseUrl from '../lib/BaseUrl';
-import {filesize} from "filesize";
+import filesize from "filesize";
 
 class Common {
 

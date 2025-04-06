@@ -2,13 +2,12 @@ import Koa from 'koa';
 import homepage from './homepage/homepage';
 import path from "path";
 import api from './api/routes';
-const serve = require('koa-static-server');
+import serve from 'koa-static-server';
 
 const app: Koa = new Koa();
-const {fileIconsPath} = require('./lib/FileIcon');
-const config = require('./lib/Config');
-const bodyParser = require('koa-bodyparser');
-
+import {fileIconsPath} from './lib/FileIcon';
+import bodyParser from 'koa-bodyparser';
+import {getPort} from "./lib/Config";
 
 app.use(async (ctx: Koa.Context, next: Function) => {
     ctx.set('Access-Control-Allow-Origin', '*');
@@ -36,5 +35,5 @@ app.use(serve({
 app.keys = ['secret'];
 
 
-app.listen(config.port);
-console.info(`Listening to http://localhost:${config.port} 🚀`);
+app.listen(getPort());
+console.info(`Listening to http://localhost:${getPort()} 🚀`);

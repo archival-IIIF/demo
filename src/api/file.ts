@@ -6,6 +6,7 @@ import common from './common';
 import {serveImage} from "@archival-iiif/image-server-core";
 import {imageSize} from 'image-size';
 import getBaseUrl from '../lib/BaseUrl';
+import {imageSizeFromFile} from 'image-size/fromFile';
 
 const router: Router = new Router();
 
@@ -82,12 +83,12 @@ router.get('/iiif/image/:image/:region/:size/:rotation/:quality.:format', async 
 
 });
 
-router.get('/iiif/image/:image/info.json', ctx => {
+router.get('/iiif/image/:image/info.json', async ctx => {
     const objectPath = common.decodeDataPath(ctx.params.image);
     if (!objectPath) {
         return ctx.throw(404);
     }
-    const dimensions = imageSize(objectPath);
+    const dimensions = await imageSizeFromFile(objectPath);
     const imageWith = dimensions.width;
     const imageHeight = dimensions.height;
     ctx.body = {

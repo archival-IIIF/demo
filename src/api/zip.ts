@@ -10,13 +10,13 @@ const router: Router = new Router();
 router.get('/zip/:id', async ctx => {
 
     const id = ctx.params.id;
-    const dest = Common.getCachePath() + '/' + id + '.zip';
+    const dest = common.getCachePath() + '/' + id + '.zip';
 
     if (fs.existsSync(dest)) {
         return await download(ctx, dest)
     }
 
-    let source: string | false = Common.getDemoDataPath();
+    let source: string | false = common.getDemoDataPath();
     if (id !== 'demo') {
         source = common.decodeDataPath(ctx.params.id);
         if (!source) {

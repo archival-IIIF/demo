@@ -203,8 +203,8 @@ router.get('/iiif/search/:id', ctx => {
     }
 });
 
-function getImageItem(objectPath: string, ctx: Router.RouterContext) {
-    const dimensions = imageSize(objectPath);
+async function getImageItem(objectPath: string, ctx: Router.RouterContext) {
+    const dimensions = await imageSizeFromFile(objectPath);
     const imageWith = dimensions.width;
     const imageHeight = dimensions.height;
     const sizes: any = [];

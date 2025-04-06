@@ -1,11 +1,13 @@
 {
+  // See: https://www.npmjs.com/package/@tsconfig/node22
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "_version": "22.0.0",
   "compilerOptions": {
-    // See: https://www.npmjs.com/package/@tsconfig/node20
     "lib": [
       "es2023",
       "dom"
     ],
-    "module": "node16",
+    "module": "nodenext",
     "target": "es2022",
     "strict": true,
     "esModuleInterop": true,
@@ -14,10 +16,6 @@
     // custom
     "sourceMap": true,
     "outDir": "./dist",
-    // typeorm
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "strictPropertyInitialization": false
   },
   "include": [
     "./src/**/*.ts"

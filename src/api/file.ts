@@ -4,7 +4,6 @@ import  path from 'path';
 import download from '../lib/Download';
 import common from './common';
 import {serveImage} from "@archival-iiif/image-server-core";
-import {imageSize} from 'image-size';
 import getBaseUrl from '../lib/BaseUrl';
 import {imageSizeFromFile} from 'image-size/fromFile';
 

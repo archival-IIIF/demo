@@ -1,7 +1,6 @@
 import Router from 'koa-router';
 import fs from 'fs';
 import common from './common';
-import Common from "./common";
 import archiver from 'archiver';
 import download from "../lib/Download";
 

@@ -2,9 +2,9 @@ import  Router from 'koa-router';
 import  fs from 'fs';
 import  path from 'path';
 import common from './common';
-import {imageSize} from "image-size";
 import getBaseUrl from '../lib/BaseUrl';
 import removeDiacritics from "./Diacritics";
+import {imageSizeFromFile} from "image-size/fromFile";
 
 const router: Router = new Router();
 

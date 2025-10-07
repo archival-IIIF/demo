@@ -1,4 +1,4 @@
-import  Router from 'koa-router';
+import Router from '@koa/router';
 import  fs from 'fs';
 import  path from 'path';
 import common from './common';

@@ -1,4 +1,4 @@
-import  Router from 'koa-router';
+import Router from '@koa/router';
 import  path from 'path';
 import  mime from 'mime-types';
 import  fs from 'fs';

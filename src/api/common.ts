@@ -1,14 +1,15 @@
-import Router from 'koa-router';
+import Router from '@koa/router';
 import Pronoms from './pronoms';
 import fs from 'fs';
 import path from 'path';
 import getBaseUrl from '../lib/BaseUrl';
 import filesize from "filesize";
+import {Context} from "koa";
 
 class Common {
 
 
-    static getMediaTypeAndFormat(objectPath: string, ctx: Router.RouterContext) {
+    static getMediaTypeAndFormat(objectPath: string, ctx: Context) {
 
         const extension = path.extname(objectPath);
 
@@ -124,11 +125,11 @@ class Common {
         return this.encode(objectPath.substr(this.getDemoDataPath().length + 1));
     }
 
-    static getIIIFThumbnail(relativePath: string, ctx: Router.RouterContext) {
+    static getIIIFThumbnail(relativePath: string, ctx: Context) {
         return getBaseUrl(ctx) + '/iiif/image/' + relativePath + '/full/!100,100/0/default.jpg'
     }
 
-    static getUriByObjectPath(objectPath: string, ctx: Router.RouterContext, type: string) {
+    static getUriByObjectPath(objectPath: string, ctx: Context, type: string) {
 
         if (!type) {
             type = 'collection';

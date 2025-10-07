@@ -1,6 +1,6 @@
-import  Router from 'koa-router';
+import {Context, ParameterizedContext} from "koa";
 
-function getBaseUrl(ctx: Router.RouterContext): string {
+export default function getBaseUrl(ctx: Context | ParameterizedContext): string {
     if (ctx.headers['x-forwarded-host']) {
 
         let protocol = 'http';
@@ -11,8 +11,7 @@ function getBaseUrl(ctx: Router.RouterContext): string {
         return protocol + '://' + ctx.headers['x-forwarded-host'];
     }
 
-    return ctx.request.origin;
+    let protocol = 'http';
+
+    return protocol + '://' + ctx.headers['host'];
 }
-
-export default getBaseUrl;
-

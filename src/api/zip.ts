@@ -1,8 +1,9 @@
-import Router from 'koa-router';
+import Router from '@koa/router';
 import fs from 'fs';
 import common from './common';
 import archiver from 'archiver';
 import download from "../lib/Download";
+import {Context} from "koa";
 
 const router: Router = new Router();
 

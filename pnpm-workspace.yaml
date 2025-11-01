@@ -1,0 +1,5 @@
+packages:
+  - '**'
+
+# 1 week (in minutes)
+minimumReleaseAge: 10080

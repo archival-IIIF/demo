@@ -3,9 +3,8 @@ import fs from 'fs';
 import common from './common';
 import archiver from 'archiver';
 import download from "../lib/Download";
-import {Context} from "koa";
 
-const router: Router = new Router();
+const router = new Router();
 
 router.get('/zip/:id', async ctx => {
 
@@ -27,7 +26,7 @@ router.get('/zip/:id', async ctx => {
     const archive = archiver('zip', {zlib: { level: 9 }});
     archive.pipe(output);
     archive.directory(source, '/');
-    await (new Promise((resolve, reject) => {
+    await (new Promise((resolve, _) => {
         archive.finalize().then(() => {
             resolve('done');
         })

@@ -7,7 +7,7 @@ import {serveImage} from "@archival-iiif/image-server-core";
 import getBaseUrl from '../lib/BaseUrl';
 import {imageSizeFromFile} from 'image-size/fromFile';
 
-const router: Router = new Router();
+const router = new Router();
 
 router.get('/file/:id', async ctx => {
 

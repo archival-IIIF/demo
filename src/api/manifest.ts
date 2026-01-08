@@ -1,4 +1,4 @@
-import Router from '@koa/router';
+import Router, {RouterContext} from '@koa/router';
 import  fs from 'fs';
 import  path from 'path';
 import common from './common';
@@ -6,7 +6,7 @@ import getBaseUrl from '../lib/BaseUrl';
 import removeDiacritics from "./Diacritics";
 import {imageSizeFromFile} from "image-size/fromFile";
 
-const router: Router = new Router();
+const router = new Router();
 
 router.get('/iiif/manifest/:id', ctx => {
 
@@ -203,7 +203,7 @@ router.get('/iiif/search/:id', ctx => {
     }
 });
 
-async function getImageItem(objectPath: string, ctx: Router.RouterContext) {
+async function getImageItem(objectPath: string, ctx: RouterContext) {
     const dimensions = await imageSizeFromFile(objectPath);
     const imageWith = dimensions.width;
     const imageHeight = dimensions.height;

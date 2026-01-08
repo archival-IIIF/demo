@@ -1,10 +1,10 @@
-import Router from '@koa/router';
 import Pronoms from './pronoms';
 import fs from 'fs';
 import path from 'path';
 import getBaseUrl from '../lib/BaseUrl';
 import filesize from "filesize";
-import {Context} from "koa";
+import type {Context} from "koa";
+import type {RouterContext} from "@koa/router";
 
 class Common {
 
@@ -143,7 +143,7 @@ class Common {
         return getBaseUrl(ctx) + '/iiif/' + type + '/' + this.encode(relativePath);
     }
 
-    static getFileId(ctx: Router.RouterContext, objectPath: string) {
+    static getFileId(ctx: RouterContext, objectPath: string) {
         const relativePath = this.getRelativePath(objectPath);
 
         return getBaseUrl(ctx) + '/file/' + relativePath;
@@ -222,7 +222,7 @@ class Common {
         return output;
     }
 
-    static addSearch(output: any, objectPath: string, ctx: Router.RouterContext) {
+    static addSearch(output: any, objectPath: string, ctx: RouterContext) {
         const searchFile = objectPath + '.iiif/search.json';
         if (!fs.existsSync(searchFile)) {
             return output;
@@ -248,7 +248,7 @@ class Common {
         return output;
     }
 
-    static addTranscript(output: any, objectPath: string, ctx: Router.RouterContext) {
+    static addTranscript(output: any, objectPath: string, ctx: RouterContext) {
 
         if (!output.items || !output.items[0]) {
             return output;

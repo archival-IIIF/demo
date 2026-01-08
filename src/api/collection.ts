@@ -5,7 +5,7 @@ import common from './common';
 import getBaseUrl from "../lib/BaseUrl";
 import {Collection, Manifest, Resource} from "@archival-iiif/presentation-builder";
 
-const router: Router = new Router();
+const router = new Router();
 
 router.get('/iiif/collection/:id', ctx => {
     const isRoot = ctx.params.id === 'demo';

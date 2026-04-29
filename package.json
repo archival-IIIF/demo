@@ -29,6 +29,8 @@
     "typescript": "^6.0.2"
   },
   "scripts": {
+    "start": "ts-node ./src/server.ts",
+    "start:prod": "node ./dist/server.js",
     "watch": "node --watch -r ts-node/register ./src/server.ts",
     "build": "rimraf dist/ && tsc && copyfiles -u 1 \"src/**/*.html\" \"src/**/*.ico\" dist/"
   },

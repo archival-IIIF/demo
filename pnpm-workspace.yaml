@@ -1,5 +1,8 @@
 packages:
   - '**'
 
+allowBuilds:
+  sharp: false
+
 # 1 week (in minutes)
 minimumReleaseAge: 10080

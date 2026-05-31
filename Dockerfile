@@ -9,7 +9,7 @@ RUN corepack enable
 # Install all dependencies once so the build stage has everything it needs.
 FROM base AS deps
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
 # Build the TypeScript app and copy static assets into dist/.
@@ -24,7 +24,7 @@ RUN pnpm build
 # Create a production-only node_modules tree for the final runtime image.
 FROM base AS prod-deps
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
 RUN pnpm install --prod --frozen-lockfile
 
 # Final image: only the compiled app, bundled demo data, and runtime dependencies.

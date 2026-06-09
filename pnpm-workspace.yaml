@@ -2,7 +2,6 @@ packages:
   - '**'
 
 allowBuilds:
-  '@swc/core': true
   sharp: true
 
 # 1 week (in minutes)

@@ -3,7 +3,7 @@
     "@archival-iiif/image-server-core": "^2.2.0",
     "@archival-iiif/presentation-builder": "^1.5.3",
     "@archival-iiif/viewer": "^3.1.0",
-    "@koa/router": "^15.5.0",
+    "@koa/router": "^15.6.0",
     "archiver": "^7.0.1",
     "dotenv": "^17.4.2",
     "file-icon-vectors": "github:dmhendricks/file-icon-vectors",
@@ -16,7 +16,6 @@
     "mime-types": "^2.1.35"
   },
   "devDependencies": {
-    "@swc/core": "1.13.5",
     "@types/archiver": "^6.0.4",
     "@types/koa": "^3.0.3",
     "@types/koa-bodyparser": "^4.3.13",

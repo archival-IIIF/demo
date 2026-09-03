@@ -2,35 +2,33 @@
   "dependencies": {
     "@archival-iiif/image-server-core": "^2.2.0",
     "@archival-iiif/presentation-builder": "^1.5.3",
-    "@archival-iiif/viewer": "^3.1.0",
-    "@koa/router": "^15.6.0",
-    "archiver": "^7.0.1",
+    "@archival-iiif/viewer": "^4.0.0",
+    "@koa/router": "^15.7.0",
+    "archiver": "^8.0.0",
     "dotenv": "^17.4.2",
     "file-icon-vectors": "github:dmhendricks/file-icon-vectors",
-    "filesize": "9.0.11",
+    "filesize": "11.0.0",
     "image-size": "^2.0.2",
     "koa": "^3.2.1",
     "koa-bodyparser": "^4.4.1",
-    "koa-route": "^3.2.0",
+    "koa-route": "^4.0.1",
     "koa-static-server": "^1.5.2",
-    "mime-types": "^2.1.35"
+    "mime-types": "^3.0.0"
   },
   "devDependencies": {
-    "@types/archiver": "^6.0.4",
+    "@types/archiver": "^8.0.0",
     "@types/koa": "^3.0.3",
     "@types/koa-bodyparser": "^4.3.13",
     "@types/koa-static-server": "^1.5.3",
-    "@types/mime-types": "^2.1.4",
-    "@types/node": "^24.12.4",
+    "@types/mime-types": "^3.0.1",
+    "@types/node": "^26.0.3",
     "copyfiles": "^2.4.1",
     "rimraf": "^6.1.3",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
   },
   "scripts": {
-    "start": "ts-node ./src/server.ts",
-    "start:prod": "node ./dist/server.js",
-    "watch": "node --watch -r ts-node/register ./src/server.ts",
+    "dev": "node --watch -r ts-node/register ./src/server.ts",
     "build": "rimraf dist/ && tsc && copyfiles -u 1 \"src/**/*.html\" \"src/**/*.ico\" dist/"
   },
   "packageManager": "pnpm@11.5.0"

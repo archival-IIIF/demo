@@ -1,7 +1,7 @@
 import Router from '@koa/router';
-import fs from 'fs';
+import fs from 'node:fs';
 import common from './common';
-import archiver from 'archiver';
+import {ZipArchive} from 'archiver';
 import download from "../lib/Download";
 
 const router = new Router();
@@ -23,7 +23,7 @@ router.get('/zip/:id', async ctx => {
         }
     }
     const output = fs.createWriteStream(dest);
-    const archive = archiver('zip', {zlib: { level: 9 }});
+    const archive = new ZipArchive({zlib: { level: 9 }});
     archive.pipe(output);
     archive.directory(source, '/');
     await (new Promise((resolve, _) => {

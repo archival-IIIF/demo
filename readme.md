@@ -8,6 +8,7 @@
 https://iiif.sozialarchiv.ch/?manifest=https://iiif.sozialarchiv.ch/iiif/collection/demo
 </div>
 
+![CI](https://github.com/archival-IIIF/demo/actions/workflows/ci.yml/badge.svg)
 
 ## Installation
 
@@ -24,10 +25,10 @@ https://iiif.sozialarchiv.ch/?manifest=https://iiif.sozialarchiv.ch/iiif/collect
 4. Start server
   ```sh
   # with pnpm
-  pnpm watch
+  pnpm dev
 
   # with npm
-  npm run watch
+  npm run dev
   ```
 
 ## Docker

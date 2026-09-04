@@ -39,8 +39,23 @@ jobs:
       - name: Run Docker image
         run: docker run -d --name app-test -p 3334:3334 app:test
 
-      - name: Show container logs
-        run: docker logs app-test
-
       - name: Test application
-        run: curl --fail http://localhost:3334/
+        run: |
+          docker ps -a
+          
+          for i in {1..10}; do
+            if curl -v --fail http://localhost:3334/; then
+              exit 0
+            fi
+          
+            docker ps -a
+            sleep 1
+          done
+          
+          echo "=== Container logs ==="
+          docker logs app-test || true
+          
+          echo "=== Container state ==="
+          docker inspect app-test --format='Status={{.State.Status}} ExitCode={{.State.ExitCode}} Error={{.State.Error}}'
+          
+          exit 1

@@ -1,5 +1,5 @@
-# Shared base image for all stages. We keep Node 22 to match the project setup.
-FROM node:22-bookworm-slim AS base
+# Shared base image for all stages. We keep Node 24 to match the project setup.
+FROM node:24-bookworm-slim AS base
 
 WORKDIR /app
 

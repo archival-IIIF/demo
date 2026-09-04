@@ -32,3 +32,12 @@ jobs:
 
       - name: Build
         run: pnpm run build
+
+      - name: Build Docker image
+        run: docker build -t app:test .
+
+      - name: Run Docker image
+        run: docker run -d --name app-test -p 3334:3334 app:test
+
+      - name: Test application
+        run: curl --fail http://localhost:3334/

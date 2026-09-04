@@ -23,11 +23,11 @@ const data: IData = {
 
 class Pronoms {
     static has(extension: string) {
-        return data.hasOwnProperty(extension);
+        return  Object.hasOwn(data, extension);
     }
 
     static get(extension: string) {
-        if (!data.hasOwnProperty(extension)) {
+        if (!Object.hasOwn(data, extension)) {
             return null;
         }
 

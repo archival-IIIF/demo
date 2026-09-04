@@ -1,8 +1,8 @@
-import {RouterContext} from '@koa/router';
-import  path from 'path';
+import type {RouterContext} from '@koa/router';
+import  path from 'node:path';
 import  mime from 'mime-types';
-import  fs from 'fs';
-import {promisify} from 'util';
+import  fs from 'node:fs';
+import {promisify} from 'node:util';
 const readFileAsync = promisify(fs.readFile);
 import HttpError from '../lib/HttpError';
 
@@ -19,7 +19,7 @@ async function download(ctx: RouterContext, filePath: string, fileName?: string)
         ctx.set('Content-Disposition', 'inline; filename="' + fileName + '"');
         ctx.body = await readFileAsync(filePath);
     }
-    catch (err) {
+    catch (_err) {
         throw new HttpError(404);
     }
 }

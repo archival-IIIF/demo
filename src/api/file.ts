@@ -1,6 +1,6 @@
 import Router from '@koa/router';
-import  fs from 'fs';
-import  path from 'path';
+import  fs from 'node:fs';
+import  path from 'node:path';
 import download from '../lib/Download';
 import common from './common';
 import {serveImage} from "@archival-iiif/image-server-core";
@@ -63,7 +63,7 @@ router.get('/iiif/image/:image/:region/:size/:rotation/:quality.:format', async 
     if (!objectPath) {
         return ctx.throw(404);
     }
-    let result = await serveImage(objectPath, null, {
+    const result = await serveImage(objectPath, null, {
         region,
         size,
         rotation,

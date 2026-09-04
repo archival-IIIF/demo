@@ -1,6 +1,6 @@
 import Koa from 'koa';
 import homepage from './homepage/homepage';
-import path from "path";
+import path from 'node:path';
 import api from './api/routes';
 import serve from 'koa-static-server';
 
@@ -9,7 +9,7 @@ import {fileIconsPath} from './lib/FileIcon';
 import bodyParser from 'koa-bodyparser';
 import {getPort} from "./lib/Config";
 
-app.use(async (ctx: Koa.Context, next: Function) => {
+app.use(async (ctx: Koa.Context, next: () => void) => {
     ctx.set('Access-Control-Allow-Origin', '*');
     ctx.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 

@@ -1,6 +1,6 @@
 import Pronoms from './pronoms';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import getBaseUrl from '../lib/BaseUrl';
 import { filesize } from 'filesize';
 import type {Context} from "koa";
@@ -36,24 +36,24 @@ class Common {
         }
 
         if (extension === '.jpg') {
-            const relativePath = this.getRelativePath(objectPath);
+            const relativePath = Common.getRelativePath(objectPath);
             return {
                 type: 'Image',
                 format: 'image/jpeg',
                 thumbnail: {
-                    id: this.getIIIFThumbnail(relativePath, ctx),
+                    id: Common.getIIIFThumbnail(relativePath, ctx),
                     format: 'image/jpeg'
                 }
             };
         }
 
         if (extension === '.png') {
-            const relativePath = this.getRelativePath(objectPath);
+            const relativePath = Common.getRelativePath(objectPath);
             return {
                 type: 'Image',
                 format: 'image/png',
                 thumbnail: {
-                    id: this.getIIIFThumbnail(relativePath, ctx),
+                    id: Common.getIIIFThumbnail(relativePath, ctx),
                     format: 'image/png'
                 }
             };
@@ -122,7 +122,7 @@ class Common {
     }
 
     static getRelativePath(objectPath: string) {
-        return this.encode(objectPath.substr(this.getDemoDataPath().length + 1));
+        return Common.encode(objectPath.substr(Common.getDemoDataPath().length + 1));
     }
 
     static getIIIFThumbnail(relativePath: string, ctx: Context) {
@@ -135,16 +135,16 @@ class Common {
             type = 'collection';
         }
 
-        let relativePath = this.getRelativePath(objectPath);
+        let relativePath = Common.getRelativePath(objectPath);
         if (relativePath === '') {
             relativePath = 'demo';
         }
 
-        return getBaseUrl(ctx) + '/iiif/' + type + '/' + this.encode(relativePath);
+        return getBaseUrl(ctx) + '/iiif/' + type + '/' + Common.encode(relativePath);
     }
 
     static getFileId(ctx: RouterContext, objectPath: string) {
-        const relativePath = this.getRelativePath(objectPath);
+        const relativePath = Common.getRelativePath(objectPath);
 
         return getBaseUrl(ctx) + '/file/' + relativePath;
     }
@@ -154,19 +154,19 @@ class Common {
     }
 
     static getCachePath() {
-        return path.join(this.getDemoPath(), 'cache');
+        return path.join(Common.getDemoPath(), 'cache');
     }
 
     static getDemoDataPath() {
-        return path.join(this.getDemoPath(), 'data');
+        return path.join(Common.getDemoPath(), 'data');
     }
 
     static decodeDataPath(input?: string): string | false {
-        return this.decodePath(this.getDemoDataPath(), input);
+        return Common.decodePath(Common.getDemoDataPath(), input);
     }
 
     static decodeCachePath(input?: string): string | false {
-        return this.decodePath(this.getCachePath(), input);
+        return Common.decodePath(Common.getCachePath(), input);
     }
 
     static decodePath(root: string, input?: string): string | false {
@@ -178,7 +178,7 @@ class Common {
 
         const tmpArray =  input.replace(/__/g, ' ').split('--');
         for (let dirName of tmpArray) {
-            dirName = this.basename(dirName);
+            dirName = Common.basename(dirName);
             if (dirName.startsWith('.')) {
                 return false;
             }
@@ -200,21 +200,18 @@ class Common {
     }
 
     static addMetadata(output: any, objectPath: string) {
-        const globalMetadataPath = this.getDemoPath() + '/manifest.json';
+        const globalMetadataPath = Common.getDemoPath() + '/manifest.json';
         if (fs.existsSync(globalMetadataPath)) {
-            let additionalMetadata = JSON.parse(fs.readFileSync(globalMetadataPath, 'utf8'));
+            const additionalMetadata = JSON.parse(fs.readFileSync(globalMetadataPath, 'utf8'));
             output = Object.assign(output, additionalMetadata);
         }
 
-        let metadataPath;
-        if (fs.lstatSync(objectPath).isDirectory()) {
-            metadataPath =  objectPath + '/manifest.json';
-        } else {
-            metadataPath =  objectPath + '.iiif/manifest.json';
-        }
+        const metadataPath = fs.lstatSync(objectPath).isDirectory() ?
+            objectPath + '/manifest.json' :
+            objectPath + '.iiif/manifest.json';
 
         if (fs.existsSync(metadataPath)) {
-            let additionalMetadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
+            const additionalMetadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
             output = Object.assign(output, additionalMetadata);
         }
 
@@ -235,11 +232,11 @@ class Common {
 
         output.service.push({
             "@context":	"http://iiif.io/api/search/1/context.json",
-            id:	this.getUriByObjectPath(objectPath, ctx, 'search'),
+            id:	Common.getUriByObjectPath(objectPath, ctx, 'search'),
             type: "SearchService1",
             profile: "http://iiif.io/api/search/1/search",
             service: [{
-                id:	this.getUriByObjectPath(objectPath, ctx, 'autocomplete'),
+                id:	Common.getUriByObjectPath(objectPath, ctx, 'autocomplete'),
                 profile: "http://iiif.io/api/search/1/autocomplete",
                 type: "AutoCompleteService1"
             }]
@@ -250,11 +247,11 @@ class Common {
 
     static addTranscript(output: any, objectPath: string, ctx: RouterContext) {
 
-        if (!output.items || !output.items[0]) {
+        if ( !output.items?.[0]) {
             return output;
         }
 
-        let vttPath =  objectPath + '.iiif/transcript.vtt';
+        const vttPath =  objectPath + '.iiif/transcript.vtt';
 
         if (!fs.existsSync(vttPath)) {
             return output;
@@ -268,11 +265,11 @@ class Common {
                 continue;
             }
             const lines = e.split("\r\n");
-            const t = parseInt(lines[1].substr(0, 2)) * 3600 +
-                parseInt(lines[1].substr(3, 2)) * 60 +
-                parseInt(lines[1].substr(6, 2));
+            const t = parseInt(lines[1].substr(0, 2), 10) * 3600 +
+                parseInt(lines[1].substr(3, 2), 10) * 60 +
+                parseInt(lines[1].substr(6, 2), 10);
             items.push({
-                id:	this.getUriByObjectPath(objectPath, ctx, 'manifest') + '/Annotation/' + (i++).toString(),
+                id:	Common.getUriByObjectPath(objectPath, ctx, 'manifest') + '/Annotation/' + (i++).toString(),
                 motivation:	"supplementing",
                 type: "Annotation",
                 body: {
@@ -280,13 +277,13 @@ class Common {
                     type:	"TextualBody",
                     value:	lines[2]
                 },
-                target:	this.getUriByObjectPath(objectPath, ctx, 'manifest') +  "/canvas/arthur.mp4#t=" + t.toString()
+                target:	Common.getUriByObjectPath(objectPath, ctx, 'manifest') +  "/canvas/arthur.mp4#t=" + t.toString()
             });
         }
 
         output.items[0].annotations = [
             {
-                id: this.getUriByObjectPath(objectPath, ctx, 'manifest') +  '/AnnotationPage',
+                id: Common.getUriByObjectPath(objectPath, ctx, 'manifest') +  '/AnnotationPage',
                 type: "AnnotationPage",
                 items
             }
@@ -297,7 +294,7 @@ class Common {
 
     static getMetadata(objectPath: string) {
 
-        let metadata = [];
+        const metadata = [];
 
         const extension = path.extname(objectPath).substr(1);
 
@@ -306,8 +303,8 @@ class Common {
             if (pronom) {
                 metadata.push({
                     label: {en: ["File type"], de: ['Dateityp']},
-                    value: '<a href=\"https://www.nationalarchives.gov.uk/PRONOM/Format/proFormatSearch.aspx?status='+
-                        'detailReport&id=' + pronom.id + '\"> '+pronom.name+' (.' + extension + ')</a>'
+                    value: '<a href="https://www.nationalarchives.gov.uk/PRONOM/Format/proFormatSearch.aspx?status='+
+                        'detailReport&id=' + pronom.id + '"> '+pronom.name+' (.' + extension + ')</a>'
                 });
             }
         }

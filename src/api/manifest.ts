@@ -1,6 +1,6 @@
-import Router, {RouterContext} from '@koa/router';
-import  fs from 'fs';
-import  path from 'path';
+import Router, {type RouterContext} from '@koa/router';
+import  fs from 'node:fs';
+import  path from 'node:path';
 import common from './common';
 import getBaseUrl from '../lib/BaseUrl';
 import removeDiacritics from "./Diacritics";
@@ -45,7 +45,7 @@ router.get('/iiif/manifest/:id', ctx => {
         const pagesDir = objectPath + '.iiif/pages';
         if (fs.existsSync(pagesDir)) {
             const pages = fs.readdirSync(pagesDir);
-            pages.forEach(function (page) {
+            pages.forEach((page) => {
                 output.items.push(getImageItem(pagesDir + '/' + page, ctx))
             });
         }
@@ -58,7 +58,7 @@ router.get('/iiif/manifest/:id', ctx => {
             label: {en: ['Original copy'], de: ['Originalkopie']},
             format: mediaTypeAndFormat.format
         }];
-        if (output.hasOwnProperty('rendering')) {
+        if (Object.hasOwn(output, 'rendering')) {
             rendering = output.rendering;
             for(const r of rendering) {
                 r.id = getBaseUrl(ctx) +  r.id
@@ -109,10 +109,10 @@ router.get('/iiif/autocomplete/:id', ctx => {
         return ctx.throw(404);
     }
 
-    let searchData: {chars: string}[][] = JSON.parse(fs.readFileSync(searchFile, 'utf8'));
+    const searchData: {chars: string}[][] = JSON.parse(fs.readFileSync(searchFile, 'utf8'));
 
     const terms = [];
-    let q = ctx.query.q?.toString() ?? '';
+    const q = ctx.query.q?.toString() ?? '';
     if (q !== '') {
         const qq = removeDiacritics(q);
         for (const p of searchData) {
@@ -152,11 +152,11 @@ router.get('/iiif/search/:id', ctx => {
         return ctx.throw(404);
     }
 
-    let searchData: {chars: string, on?: string}[][] = JSON.parse(fs.readFileSync(searchFile, 'utf8'));
+    const searchData: {chars: string, on?: string}[][] = JSON.parse(fs.readFileSync(searchFile, 'utf8'));
 
     const hits = [];
     const resources = [];
-    let q = ctx.query.q?.toString() ?? '';
+    const q = ctx.query.q?.toString() ?? '';
     if (q !== '') {
         let a = 0;
         const qq = removeDiacritics(q);

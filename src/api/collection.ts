@@ -1,6 +1,6 @@
 import Router from '@koa/router';
-import  fs from 'fs';
-import  path from 'path';
+import  fs from 'node:fs';
+import  path from 'node:path';
 import common from './common';
 import getBaseUrl from "../lib/BaseUrl";
 import {Collection, Manifest, Resource} from "@archival-iiif/presentation-builder";
@@ -31,7 +31,7 @@ router.get('/iiif/collection/:id', ctx => {
         );
     }
 
-    fs.readdirSync(objectPath).map((name: string) => {
+    fs.readdirSync(objectPath).forEach((name: string) => {
 
         const subObjectPath = path.join(objectPath, name);
 

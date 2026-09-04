@@ -1,4 +1,4 @@
-import {Context, ParameterizedContext} from "koa";
+import type {Context, ParameterizedContext} from "koa";
 
 export default function getBaseUrl(ctx: Context | ParameterizedContext): string {
     if (ctx.headers['x-forwarded-host']) {
@@ -11,7 +11,7 @@ export default function getBaseUrl(ctx: Context | ParameterizedContext): string 
         return protocol + '://' + ctx.headers['x-forwarded-host'];
     }
 
-    let protocol = 'http';
+    const protocol = 'http';
 
-    return protocol + '://' + ctx.headers['host'];
+    return protocol + '://' + ctx.headers.host;
 }

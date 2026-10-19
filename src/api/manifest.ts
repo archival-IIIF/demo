@@ -8,7 +8,7 @@ import {imageSizeFromFile} from "image-size/fromFile";
 
 const router = new Router();
 
-router.get('/iiif/manifest/:id', ctx => {
+router.get('/iiif/manifest/:id', async ctx => {
 
     const objectPath = common.decodeDataPath(ctx.params.id)
     if (!objectPath) {
@@ -41,7 +41,7 @@ router.get('/iiif/manifest/:id', ctx => {
 
     if (mediaTypeAndFormat.type === 'Image') {
 
-        output.items = [getImageItem(objectPath, ctx)];
+        output.items = [await getImageItem(objectPath, ctx)];
         const pagesDir = objectPath + '.iiif/pages';
         if (fs.existsSync(pagesDir)) {
             const pages = fs.readdirSync(pagesDir);

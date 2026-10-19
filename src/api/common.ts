@@ -265,9 +265,9 @@ class Common {
                 continue;
             }
             const lines = e.split("\r\n");
-            const t = parseInt(lines[1].substr(0, 2), 10) * 3600 +
-                parseInt(lines[1].substr(3, 2), 10) * 60 +
-                parseInt(lines[1].substr(6, 2), 10);
+            const t = parseInt(lines[1]?.slice(0, 2), 10) * 3600 +
+                parseInt(lines[1]?.slice(3, 5), 10) * 60 +
+                parseInt(lines[1]?.slice(6, 8), 10);
             items.push({
                 id:	Common.getUriByObjectPath(objectPath, ctx, 'manifest') + '/Annotation/' + (i++).toString(),
                 motivation:	"supplementing",

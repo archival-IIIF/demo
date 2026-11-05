@@ -9,6 +9,43 @@ import {imageSizeFromFile} from 'image-size/fromFile';
 
 const router = new Router();
 
+const MAX_IMAGE_SIZE = getMaxImageSize();
+
+function getMaxImageSize(): number {
+    const value = Number.parseInt(process.env.MAX_IMAGE_SIZE ?? '5000', 10);
+    return value > 0 ? value : 5000;
+}
+
+/**
+ * Accepts the IIIF Image API 3 size syntax without upscaling
+ * ("max", "w,", ",h", "w,h", "!w,h", "pct:n") and rejects requested
+ * dimensions above MAX_IMAGE_SIZE, so every request stays cheap to render
+ * and the number of distinct cached tiles stays bounded.
+ */
+function isAllowedSize(size: string): boolean {
+    if (size === 'max' || size === 'full') {
+        return true;
+    }
+
+    const pct = /^pct:(\d+(\.\d+)?)$/.exec(size);
+    if (pct) {
+        const value = Number.parseFloat(pct[1]);
+        return value > 0 && value <= 100;
+    }
+
+    const dims = /^!?(\d*),(\d*)$/.exec(size);
+    if (!dims || (dims[1] === '' && dims[2] === '')) {
+        return false;
+    }
+
+    return [dims[1], dims[2]]
+        .filter((v) => v !== '')
+        .every((v) => {
+            const n = Number.parseInt(v, 10);
+            return n > 0 && n <= MAX_IMAGE_SIZE;
+        });
+}
+
 router.get('/file/:id', async ctx => {
 
     const objectPath = common.decodeDataPath(ctx.params.id);
@@ -35,7 +72,7 @@ router.get('/iiif/image/:image/:region/:size/:rotation/:quality.:format', async 
     const quality = common.basename(ctx.params.quality);
     const format = common.basename(ctx.params.format);
     // Upscaling ("^") is not advertised in info.json and is an easy way to exhaust CPU, memory and disk.
-    if (size.startsWith('^')) {
+    if (size.startsWith('^') || !isAllowedSize(size)) {
         return ctx.throw(400);
     }
 

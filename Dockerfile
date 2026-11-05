@@ -48,6 +48,10 @@ COPY --from=build /app/viewer ./viewer
 COPY --from=build /app/data ./data
 COPY package.json ./
 
+RUN mkdir -p /app/cache && chown node:node /app/cache
+
+USER node
+
 EXPOSE 3334
 
 CMD ["node", "dist/server.js"]

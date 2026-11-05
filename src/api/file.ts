@@ -34,6 +34,11 @@ router.get('/iiif/image/:image/:region/:size/:rotation/:quality.:format', async 
     const rotation = common.basename(ctx.params.rotation);
     const quality = common.basename(ctx.params.quality);
     const format = common.basename(ctx.params.format);
+    // Upscaling ("^") is not advertised in info.json and is an easy way to exhaust CPU, memory and disk.
+    if (size.startsWith('^')) {
+        return ctx.throw(400);
+    }
+
     if (
         image.startsWith('.') ||
         region.startsWith('.') ||

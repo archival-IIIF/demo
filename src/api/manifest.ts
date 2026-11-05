@@ -45,9 +45,9 @@ router.get('/iiif/manifest/:id', async ctx => {
         const pagesDir = objectPath + '.iiif/pages';
         if (fs.existsSync(pagesDir)) {
             const pages = fs.readdirSync(pagesDir);
-            pages.forEach((page) => {
-                output.items.push(getImageItem(pagesDir + '/' + page, ctx))
-            });
+            for (const page of pages) {
+                output.items.push(await getImageItem(pagesDir + '/' + page, ctx));
+            }
         }
         output = common.addSearch(output, objectPath, ctx);
 
@@ -223,7 +223,7 @@ async function getImageItem(objectPath: string, ctx: RouterContext) {
                     type: 'Annotation',
                     motivation: 'painting',
                     body: {
-                        id: common.getIIIFThumbnail(objectPath, ctx,),
+                        id: common.getIIIFThumbnail(common.getRelativePath(objectPath), ctx),
                         type: 'Image',
                         format: 'image/jpeg',
                         width: imageWith,

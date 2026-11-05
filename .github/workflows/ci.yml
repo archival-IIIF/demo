@@ -16,7 +16,7 @@ jobs:
       - name: Setup pnpm and Node.js
         uses: pnpm/setup@v2
         with:
-          runtime: node@24
+          runtime: node@26
           install: false
           cache: true
 

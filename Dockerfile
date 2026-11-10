@@ -1,8 +1,9 @@
-FROM node:24-bookworm-slim AS base
+FROM node:26-trixie-slim AS base
 
 WORKDIR /app
 
-RUN corepack enable
+COPY package.json ./
+RUN npm install -g "$(node -p "require('./package.json').packageManager.split('+')[0]")"
 
 
 # Development/build dependencies
@@ -35,7 +36,7 @@ RUN --mount=type=cache,id=pnpm-prod,target=/root/.local/share/pnpm/store \
 
 
 # Runtime
-FROM node:24-bookworm-slim AS runtime
+FROM node:26-trixie-slim AS runtime
 
 WORKDIR /app
 
